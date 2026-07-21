@@ -1,1 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Legal Notice — CarastoSoft</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+  <style>
+    :root {
+      --bg-color: #08090b;
+      --surface-card: rgba(255, 255, 255, 0.025);
+      --border-color: rgba(255, 255, 255, 0.07);
+      --text-primary: #f5f6f8;
+      --text-secondary: #8a919e;
+      --text-tertiary: #525866;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-primary);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      padding: 0 24px;
+    }
+
+    header {
+      width: 100%;
+      max-width: 900px;
+      padding: 36px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .brand {
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-dot { width: 6px; height: 6px; background-color: #fff; border-radius: 50%; }
+
+    .back-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: var(--text-primary); }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      padding: 60px 0 100px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    h1 { font-size: 2.5rem; font-weight: 600; letter-spacing: -0.02em; }
+
+    .legal-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 40px;
+      backdrop-filter: blur(20px);
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .section-block h2 {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .section-block p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      font-weight: 300;
+    }
+
+    footer {
+      width: 100%;
+      max-width: 900px;
+      margin-top: auto;
+      padding: 40px 0;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-tertiary);
+      font-size: 0.825rem;
+    }
+
+    footer a { color: var(--text-secondary); text-decoration: none; }
+    footer a:hover { color: var(--text-primary); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="/" class="brand">
+      <span class="brand-dot"></span>
+      CarastoSoft
+    </a>
+    <a href="/" class="back-link">&larr; Back to Home</a>
+  </header>
+
+  <div class="container">
+    <h1>Legal Notice (Impressum)</h1>
+
+    <div class="legal-card">
+      
+      <div class="section-block">
+        <h2>Information according to § 5 DDG</h2>
+        <p>
+          CARASTO Soft<br>
+          Stefano Cumini<br>
+          Liebigstr. 8<br>
+          63743 Aschaffenburg<br>
+          Germany
+        </p>
+      </div>
+
+      <div class="section-block">
+        <h2>Contact</h2>
+        <p>
+          Email: hello@carastosoft.com<br>
+          Phone: +49 1522 4804567
+        </p>
+      </div>
+
+      <div class="section-block">
+        <h2>Content Responsibility according to § 18 Abs. 2 MStV</h2>
+        <p>
+          Stefano Cumini<br>
+          Liebigstr. 8<br>
+          63743 Aschaffenburg<br>
+          Germany
+        </p>
+      </div>
+
+      <!-- Vat ID Placeholder (Enable once received from tax office)
+      <div class="section-block">
+        <h2>VAT Identification</h2>
+        <p>VAT Identification Number according to § 27 a Umsatzsteuergesetz: DE123456789</p>
+      </div>
+      -->
+
+      <div class="section-block">
+        <h2>Dispute Resolution</h2>
+        <p>The European Commission provides a platform for online dispute resolution (OS): <a href="https://ec.europa.eu/consumers/odr" target="_blank" style="color: var(--text-primary);">https://ec.europa.eu/consumers/odr</a>.<br>We are not willing or obligated to participate in dispute resolution proceedings before a consumer arbitration board.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div>&copy; 2026 CarastoSoft. All rights reserved.</div>
+    <div><a href="/">Home</a></div>
+  </footer>
+
+</body>
+</html>
