@@ -97,6 +97,61 @@
       margin-top: -15px;
     }
 
+    /* CTA / Download Buttons Area */
+    .cta-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      margin-top: -5px;
+      width: 100%;
+    }
+
+    @media (min-width: 480px) {
+      .cta-container {
+        flex-direction: row;
+      }
+    }
+
+    .btn-download {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.75rem;
+      text-decoration: none;
+      padding: 14px 22px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.2s ease-in-out;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .btn-testflight {
+      background-color: #d4a359;
+      color: #120c10;
+      border: 2px solid #ffffff;
+      box-shadow: 0 4px 12px rgba(212, 163, 89, 0.3);
+    }
+
+    .btn-testflight:hover {
+      background-color: #ffffff;
+      color: #120c10;
+      border-color: #d4a359;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(212, 163, 89, 0.5);
+    }
+
+    .btn-appstore {
+      background-color: #1a1217;
+      color: #666666;
+      border: 2px dashed #3a3238;
+      cursor: not-allowed;
+      opacity: 0.8;
+    }
+
     .main-content {
       display: flex;
       flex-direction: column;
@@ -313,6 +368,16 @@
     
     <h1 class="game-title">DICE DICE DICE</h1>
     <p class="hero-subtitle">ONE TAP.<br>INFINITE DICE POWER!</p>
+
+    <!-- Call To Action Buttons -->
+    <div class="cta-container">
+      <a href="https://testflight.apple.com/join/eW6SKc7S" target="_blank" class="btn-download btn-testflight">
+        Join TestFlight Beta
+      </a>
+      <span class="btn-download btn-appstore">
+        App Store (Coming Soon)
+      </span>
+    </div>
 
     <main class="main-content">
       
