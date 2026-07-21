@@ -23,10 +23,11 @@
       background-size: 20px 20px;
       color: #e0e0e0;
       font-family: 'Share Tech Mono', monospace;
-      padding: 15px 10px;
+      padding: 20px 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      min-height: 100vh;
       width: 100%;
     }
 
@@ -36,25 +37,26 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 25px;
+      gap: 30px;
     }
 
     .game-title {
       font-family: 'Press Start 2P', cursive;
       color: #d4a359;
-      font-size: 1.8rem;
+      font-size: 2rem;
       text-align: center;
       text-transform: uppercase;
       letter-spacing: 2px;
       text-shadow: 3px 3px 0px #000, 0 0 10px rgba(212, 163, 89, 0.4);
+      margin-top: 10px;
     }
 
     .hero-subtitle {
       font-family: 'Press Start 2P', cursive;
       color: #ffffff;
-      font-size: 0.85rem;
+      font-size: 0.95rem;
       text-align: center;
-      line-height: 1.5;
+      line-height: 1.6;
       max-width: 600px;
       margin-top: -15px;
     }
@@ -63,7 +65,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 20px;
+      gap: 25px;
       width: 100%;
     }
 
@@ -72,17 +74,17 @@
         flex-direction: row;
         align-items: flex-start;
         justify-content: center;
-        gap: 30px;
+        gap: 35px;
       }
     }
 
     .phone-container {
       position: relative;
-      width: 240px;
-      height: 490px;
+      width: 260px;
+      height: 530px;
       background: #000000;
       border: 3px solid #3a3238;
-      border-radius: 32px;
+      border-radius: 36px;
       padding: 8px;
       box-shadow: 0 0 25px rgba(0, 0, 0, 0.8), 0 0 15px rgba(212, 163, 89, 0.15);
       flex-shrink: 0;
@@ -91,13 +93,13 @@
     .phone-screen {
       width: 100%;
       height: 100%;
-      border-radius: 24px;
+      border-radius: 26px;
       overflow: hidden;
       position: relative;
       background-color: #0d080b;
     }
 
-    .phone-screen img {
+    .phone-screen video {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -108,46 +110,47 @@
       background: rgba(18, 12, 16, 0.85);
       border: 2px solid #3a3238;
       border-radius: 8px;
-      padding: 20px;
+      padding: 24px;
       width: 100%;
+      flex: 1;
       box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
     }
 
     .info-card h2 {
       font-family: 'Press Start 2P', cursive;
       color: #d4a359;
-      font-size: 1rem;
-      margin-bottom: 15px;
+      font-size: 1.1rem;
+      margin-bottom: 20px;
       line-height: 1.4;
       border-bottom: 2px solid #3a3238;
-      padding-bottom: 10px;
+      padding-bottom: 12px;
     }
 
     .info-card p {
-      font-size: 1rem;
+      font-size: 1.1rem;
       color: #cccccc;
-      line-height: 1.4;
-      margin-bottom: 20px;
+      line-height: 1.5;
+      margin-bottom: 25px;
     }
 
     .feature-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 16px;
     }
 
     .feature-item {
       display: flex;
       align-items: flex-start;
-      gap: 10px;
-      font-size: 0.95rem;
-      line-height: 1.3;
+      gap: 12px;
+      font-size: 1rem;
+      line-height: 1.4;
     }
 
     .feature-icon {
-      width: 10px;
-      height: 10px;
+      width: 12px;
+      height: 12px;
       background-color: #d4a359;
       border: 2px solid #fff;
       display: inline-block;
@@ -159,39 +162,41 @@
       color: #ffffff;
     }
 
-    /* Screenshots Galerie - Kompakt auf Mobilgeräten */
+    /* Screenshots Galerie */
     .gallery-section {
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 15px;
+      margin-top: 10px;
     }
 
     .gallery-title {
       font-family: 'Press Start 2P', cursive;
       color: #d4a359;
-      font-size: 0.9rem;
+      font-size: 1rem;
       text-transform: uppercase;
       letter-spacing: 1px;
     }
 
     .gallery-grid {
       display: flex;
-      flex-direction: row; /* Immer nebeneinander anzeigen */
+      flex-direction: row;
       justify-content: center;
-      gap: 10px;
+      gap: 15px;
       width: 100%;
+      flex-wrap: wrap;
     }
 
     .gallery-item {
-      flex: 1 1 30%; /* Verteilt die 3 Bilder gleichmäßig auf die volle Breite */
-      max-width: 180px;
+      flex: 1 1 180px;
+      max-width: 220px;
       background: #000;
       border: 2px solid #3a3238;
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
     }
 
     .gallery-item img {
@@ -202,17 +207,17 @@
 
     .gallery-caption {
       font-family: 'Press Start 2P', cursive;
-      font-size: 0.55rem;
+      font-size: 0.6rem;
       color: #888888;
       text-align: center;
-      padding: 5px 2px;
+      padding: 8px 4px;
       background: #181016;
       border-top: 1px solid #3a3238;
     }
 
     footer {
-      margin-top: 10px;
-      padding: 15px 0 5px 0;
+      margin-top: 20px;
+      padding: 20px 0;
       text-align: center;
       width: 100%;
       border-top: 1px solid #2a2228;
@@ -221,14 +226,19 @@
     .footer-links {
       display: flex;
       justify-content: center;
-      gap: 12px;
+      gap: 15px;
       flex-wrap: wrap;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
     }
 
     .footer-links a {
       color: #888888;
       text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: #d4a359;
     }
 
     .separator {
@@ -245,10 +255,13 @@
 
     <main class="main-content">
       
-      <!-- iPhone Frame -->
+      <!-- iPhone Frame mit MP4 Video -->
       <div class="phone-container">
         <div class="phone-screen">
-          <img src="https://litter.catbox.moe/1zndgv1samumqxkl.webp" alt="Dice Dice Dice Gameplay">
+          <video autoplay loop muted playsinline poster="Fire.png">
+            <source src="dice_gameplay.mp4" type="video/mp4">
+            Dein Browser unterstützt dieses Video nicht.
+          </video>
         </div>
       </div>
 
@@ -294,7 +307,7 @@
         </div>
 
         <div class="gallery-item">
-          <img src="Multiplier.png" alt="Upgrade Shop Preview">
+          <img src="Multipliers.png" alt="Upgrade Shop Preview">
           <div class="gallery-caption">UPGRADES</div>
         </div>
 
