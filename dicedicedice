@@ -1,0 +1,420 @@
+dicedicedice/index.html
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dice Dice Dice - by CarastoSoft</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: #120c10;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 20px 20px;
+      color: #e0e0e0;
+      font-family: 'Share Tech Mono', monospace;
+      padding: 0 10px 20px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    /* Studio Header Navigation ganz oben */
+    .studio-header {
+      width: 100%;
+      max-width: 950px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 5px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #2a2228;
+    }
+
+    .studio-brand {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.75rem;
+      color: #888888;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s;
+    }
+
+    .studio-brand:hover {
+      color: #d4a359;
+    }
+
+    .studio-badge {
+      background: #2a2228;
+      color: #d4a359;
+      padding: 3px 6px;
+      border-radius: 4px;
+      font-size: 0.6rem;
+      border: 1px solid #3a3238;
+    }
+
+    .site-container {
+      max-width: 950px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .game-title {
+      font-family: 'Press Start 2P', cursive;
+      color: #d4a359;
+      font-size: 2rem;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 3px 3px 0px #000, 0 0 10px rgba(212, 163, 89, 0.4);
+      margin-top: 10px;
+    }
+
+    .hero-subtitle {
+      font-family: 'Press Start 2P', cursive;
+      color: #ffffff;
+      font-size: 0.95rem;
+      text-align: center;
+      line-height: 1.6;
+      max-width: 600px;
+      margin-top: -15px;
+    }
+
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 25px;
+      width: 100%;
+    }
+
+    @media (min-width: 768px) {
+      .main-content {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 35px;
+      }
+    }
+
+    .phone-container {
+      position: relative;
+      width: 260px;
+      height: 530px;
+      background: #000000;
+      border: 3px solid #3a3238;
+      border-radius: 36px;
+      padding: 8px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.8), 0 0 15px rgba(212, 163, 89, 0.15);
+      flex-shrink: 0;
+    }
+
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      border-radius: 26px;
+      overflow: hidden;
+      position: relative;
+      background-color: #0d080b;
+    }
+
+    .phone-screen video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .info-card {
+      background: rgba(18, 12, 16, 0.85);
+      border: 2px solid #3a3238;
+      border-radius: 8px;
+      padding: 24px;
+      width: 100%;
+      flex: 1;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .info-card h2 {
+      font-family: 'Press Start 2P', cursive;
+      color: #d4a359;
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      line-height: 1.4;
+      border-bottom: 2px solid #3a3238;
+      padding-bottom: 12px;
+    }
+
+    .info-card p {
+      font-size: 1.1rem;
+      color: #cccccc;
+      line-height: 1.5;
+      margin-bottom: 25px;
+    }
+
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    .feature-icon {
+      width: 12px;
+      height: 12px;
+      background-color: #d4a359;
+      border: 2px solid #fff;
+      display: inline-block;
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+
+    .feature-item strong {
+      color: #ffffff;
+    }
+
+    /* Screenshots Galerie (4 Items) */
+    .gallery-section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      margin-top: 15px;
+    }
+
+    .gallery-title {
+      font-family: 'Press Start 2P', cursive;
+      color: #d4a359;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      width: 100%;
+    }
+
+    @media (min-width: 768px) {
+      .gallery-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .gallery-item {
+      background: #000;
+      border: 2px solid #3a3238;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .gallery-info {
+      padding: 10px 8px;
+      background: #181016;
+      border-top: 1px solid #3a3238;
+      text-align: center;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .gallery-caption {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.65rem;
+      color: #d4a359;
+    }
+
+    .gallery-subtext {
+      font-size: 0.8rem;
+      color: #aaaaaa;
+      line-height: 1.2;
+    }
+
+    footer {
+      margin-top: 20px;
+      padding: 20px 0;
+      text-align: center;
+      width: 100%;
+      border-top: 1px solid #2a2228;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      font-size: 0.9rem;
+    }
+
+    .footer-links a {
+      color: #888888;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: #d4a359;
+    }
+
+    .separator {
+      color: #444444;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Studio Header -->
+  <header class="studio-header">
+    <a href="https://www.carastosoft.com" class="studio-brand">
+      <span class="studio-badge">STUDIO</span> CARASTOSOFT
+    </a>
+    <a href="https://www.carastosoft.com" class="studio-brand" style="font-size: 0.65rem;">
+      &larr; Main Site
+    </a>
+  </header>
+
+  <div class="site-container">
+    
+    <h1 class="game-title">DICE DICE DICE</h1>
+    <p class="hero-subtitle">ONE TAP.<br>INFINITE DICE POWER!</p>
+
+    <main class="main-content">
+      
+      <!-- iPhone Frame mit MP4 Video -->
+      <div class="phone-container">
+        <div class="phone-screen">
+          <video autoplay loop muted playsinline poster="gameplay.png">
+            <source src="dice_gameplay.mp4" type="video/mp4">
+            Dein Browser unterstützt dieses Video nicht.
+          </video>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h2>THE ULTIMATE RETRO CLICKER</h2>
+        <p>
+          Tap, roll, and dominate the board in this neon-infused, 16-bit retro clicker game. 
+          Strategy meets progression as you build the ultimate dice-rolling empire.
+        </p>
+
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-icon"></span>
+            <div>
+              <strong>Addictive Progression:</strong> Watch your numbers skyrocket with satisfying multipliers and upgrades.
+            </div>
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon" style="background-color: #00ff66;"></span>
+            <div>
+              <strong>Prestige Loops:</strong> Reset your progress for permanent, powerful boosts to reach mind-blowing high scores.
+            </div>
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon" style="background-color: #ff3b30;"></span>
+            <div>
+              <strong>Retro Aesthetic:</strong> Immerse yourself in crisp pixel art, vibrant particle effects, and a classic arcade feel.
+            </div>
+          </li>
+        </ul>
+      </div>
+
+    </main>
+
+    <!-- Screenshot Galerie -->
+    <section class="gallery-section">
+      <h2 class="gallery-title">SCREENSHOTS</h2>
+      <div class="gallery-grid">
+        
+        <div class="gallery-item">
+          <img src="gameplay.png" alt="Gameplay Preview">
+          <div class="gallery-info">
+            <div class="gallery-caption">GAMEPLAY</div>
+            <div class="gallery-subtext">Roll the dice & chain massive multipliers</div>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="upgrade.png" alt="Upgrade Shop Preview">
+          <div class="gallery-info">
+            <div class="gallery-caption">UPGRADES</div>
+            <div class="gallery-subtext">Unlock powerful boosts & automate your rolls</div>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="prestige.png" alt="Prestige System Preview">
+          <div class="gallery-info">
+            <div class="gallery-caption">PRESTIGE</div>
+            <div class="gallery-subtext">Reset for permanent perks & break high scores</div>
+          </div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="stats.png" alt="Statistics Preview">
+          <div class="gallery-info">
+            <div class="gallery-caption">STATISTICS</div>
+            <div class="gallery-subtext">Track your overall rolls & total score gains</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-links">
+        <a href="https://www.carastosoft.com">CarastoSoft Home</a>
+        <span class="separator">|</span>
+        <a href="https://www.carastosoft.com/privacy-policy" target="_blank">Privacy Policy</a>
+        <span class="separator">|</span>
+        <a href="https://www.carastosoft.com/terms-of-service" target="_blank">Terms of Service</a>
+        <span class="separator">|</span>
+        <a href="https://www.carastosoft.com/legal-notice-impressum" target="_blank">Legal Notice (Impressum)</a>
+      </div>
+    </footer>
+
+  </div>
+
+</body>
+</html>
