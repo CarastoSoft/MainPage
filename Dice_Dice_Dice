@@ -1,0 +1,356 @@
+dicedicedice/index.html
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CarastoSoft - Indie Game Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: #0d080b; /* Etwas dunkler als die Spielseite */
+      background-image: 
+        linear-gradient(rgba(212, 163, 89, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212, 163, 89, 0.015) 1px, transparent 1px);
+      background-size: 30px 30px;
+      color: #e0e0e0;
+      font-family: 'Share Tech Mono', monospace;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    /* Studio Header Navigation */
+    .studio-header {
+      width: 100%;
+      background: rgba(18, 12, 16, 0.9);
+      border-bottom: 2px solid #3a3238;
+      display: flex;
+      justify-content: center;
+      padding: 20px 10px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .studio-brand {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.1rem;
+      color: #d4a359;
+      text-decoration: none;
+      letter-spacing: 1px;
+      text-shadow: 2px 2px 0px #000;
+    }
+
+    .main-nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-link {
+      color: #888888;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover {
+      color: #ffffff;
+    }
+
+    /* Hero Section */
+    .hero {
+      width: 100%;
+      max-width: 1100px;
+      padding: 80px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 20px;
+    }
+
+    .hero-title {
+      font-family: 'Press Start 2P', cursive;
+      color: #ffffff;
+      font-size: 2.2rem;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+
+    .hero-subtitle {
+      font-size: 1.3rem;
+      color: #aaaaaa;
+      max-width: 700px;
+      line-height: 1.6;
+    }
+
+    /* Games Section */
+    .games-section {
+      width: 100%;
+      background-color: #120c10;
+      border-top: 2px solid #3a3238;
+      border-bottom: 2px solid #3a3238;
+      display: flex;
+      justify-content: center;
+      padding: 60px 20px;
+    }
+
+    .section-content {
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .section-title {
+      font-family: 'Press Start 2P', cursive;
+      color: #d4a359;
+      font-size: 1.5rem;
+      text-align: center;
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .game-card {
+      background: #181016;
+      border: 2px solid #3a3238;
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .game-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.5), 0 0 10px rgba(212, 163, 89, 0.1);
+      border-color: #d4a359;
+    }
+
+    .game-thumbnail {
+      width: 100%;
+      height: 180px;
+      background-color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid #3a3238;
+    }
+    
+    .game-card-icon {
+        font-family: 'Press Start 2P', cursive;
+        color: #d4a359;
+        font-size: 3rem;
+    }
+
+    .game-info {
+      padding: 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .game-card-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.1rem;
+      color: #ffffff;
+    }
+
+    .game-card-desc {
+      font-size: 0.95rem;
+      color: #aaaaaa;
+      line-height: 1.4;
+    }
+
+    .game-card-footer {
+      display: flex;
+      justify-content: flex-end;
+      padding: 0 20px 20px 20px;
+    }
+
+    .btn-play {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.7rem;
+      background: #d4a359;
+      color: #000;
+      padding: 8px 12px;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+
+    /* About Section */
+    .about-section {
+        width: 100%;
+        max-width: 1100px;
+        padding: 60px 20px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        align-items: center;
+    }
+    
+    .about-text {
+        font-size: 1.1rem;
+        color: #cccccc;
+        max-width: 800px;
+        line-height: 1.6;
+    }
+
+    /* Footer */
+    footer {
+      width: 100%;
+      background: #181016;
+      border-top: 2px solid #3a3238;
+      padding: 30px 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .footer-content {
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      font-size: 0.9rem;
+    }
+
+    .footer-links a {
+      color: #888888;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: #d4a359;
+    }
+
+    .separator {
+      color: #444444;
+    }
+    
+    .copyright {
+        font-size: 0.8rem;
+        color: #666666;
+        margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Studio Header -->
+  <header class="studio-header">
+    <div class="header-content">
+      <a href="#" class="studio-brand">CARASTOSOFT</a>
+      <nav class="main-nav">
+        <a href="#games" class="nav-link">Games</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="https://www.carastosoft.com/legal-notice-impressum" target="_blank" class="nav-link">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1 class="hero-title">Indie Game Development Studio</h1>
+    <p class="hero-subtitle">Crafting immersive and engaging experiences for players worldwide.</p>
+  </section>
+
+  <!-- Games Section -->
+  <section id="games" class="games-section">
+    <div class="section-content">
+      <h2 class="section-title">OUR GAMES</h2>
+      <div class="games-grid">
+        
+        <!-- Game Card: Dice Dice Dice -->
+        <a href="/dicedicedice/" class="game-card">
+          <div class="game-thumbnail">
+              <span class="game-card-icon">🎲</span>
+          </div>
+          <div class="game-info">
+            <h3 class="game-card-title">DICE DICE DICE</h3>
+            <p class="game-card-desc">The ultimate retro clicker. Tap, roll, and dominate the board in this neon-infused, 16-bit arcade experience.</p>
+          </div>
+          <div class="game-card-footer">
+              <span class="btn-play">Play Now &rarr;</span>
+          </div>
+        </a>
+
+        <!-- Platzhalter für zukünftige Spiele (kannst du entfernen) -->
+        <div class="game-card" style="opacity: 0.5; cursor: default;">
+            <div class="game-thumbnail">
+                <span class="game-card-icon">🔜</span>
+            </div>
+            <div class="game-info">
+                <h3 class="game-card-title">MORE TO COME</h3>
+                <p class="game-card-desc">New experiences are currently under development. Stay tuned!</p>
+            </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  
+  <!-- About Section -->
+  <section id="about" class="about-section">
+      <h2 class="section-title">ABOUT US</h2>
+      <p class="about-text">
+          CarastoSoft is a passionate independent game development studio dedicated to creating high-quality, memorable games. We believe in the power of great gameplay and focus on innovation and craftsmanship in every project we undertake.
+      </p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="https://www.carastosoft.com/privacy-policy" target="_blank">Privacy Policy</a>
+        <span class="separator">|</span>
+        <a href="https://www.carastosoft.com/terms-of-service" target="_blank">Terms of Service</a>
+        <span class="separator">|</span>
+        <a href="https://www.carastosoft.com/legal-notice-impressum" target="_blank">Legal Notice (Impressum)</a>
+      </div>
+      <p class="copyright">&copy; 2024 CarastoSoft. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
