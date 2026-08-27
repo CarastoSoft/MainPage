@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CClocks — Premium iOS Clock & Calendar Widgets</title>
   
-  <!-- Minimalist CClocks Favicon (Inline SVG) -->
+  <!-- Minimalist CClocks Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'><path fill='%2308090b' d='M0 0h16v16H0z'/><path fill='%23FF7A00' d='M3 3h5v2H5v6h3v2H3zm6 0h5v2h-3v6h3v2H9z'/></svg>">
 
   <!-- Premium Typography -->
@@ -17,14 +17,12 @@
     :root {
       --bg-color: #08090b;
       --surface-card: rgba(255, 255, 255, 0.025);
-      --surface-card-hover: rgba(255, 255, 255, 0.04);
-      --border-color: rgba(255, 255, 255, 0.07);
-      --border-hover: rgba(255, 255, 255, 0.18);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.2);
       --text-primary: #f5f6f8;
       --text-secondary: #8a919e;
       --text-tertiary: #525866;
       --accent: #FF7A00;
-      --accent-glow: rgba(255, 122, 0, 0.15);
     }
 
     * {
@@ -43,7 +41,7 @@
       align-items: center;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
-      padding: 0 24px;
+      padding: 0 20px;
     }
 
     /* Ambient Glow Background */
@@ -61,15 +59,16 @@
       z-index: -1;
     }
 
-    /* Header */
+    /* Header & Navigation */
     header {
       width: 100%;
       max-width: 1080px;
-      padding: 36px 0;
+      padding: 24px 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid var(--border-color);
+      position: relative;
     }
 
     .brand {
@@ -82,6 +81,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
+      z-index: 10;
     }
 
     .brand-logo {
@@ -102,6 +102,30 @@
       color: var(--accent);
     }
 
+    /* Mobile Menu Toggle (Checkbox Hack) */
+    .menu-btn {
+      display: none;
+    }
+
+    .menu-icon {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 24px;
+      height: 18px;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .menu-icon span {
+      display: block;
+      height: 2px;
+      width: 100%;
+      background-color: var(--text-primary);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
     nav {
       display: flex;
       gap: 32px;
@@ -119,14 +143,58 @@
       color: var(--text-primary);
     }
 
+    /* Responsive Mobile Navigation */
+    @media (max-width: 768px) {
+      .menu-icon {
+        display: flex;
+      }
+
+      nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #0d0f12;
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 10px;
+        flex-direction: column;
+        gap: 16px;
+        z-index: 100;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      }
+
+      nav a {
+        font-size: 1rem;
+        padding: 8px 0;
+      }
+
+      /* Toggle menu display when checkbox is checked */
+      .menu-btn:checked ~ nav {
+        display: flex;
+      }
+
+      .menu-btn:checked ~ .menu-icon span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+      }
+      .menu-btn:checked ~ .menu-icon span:nth-child(2) {
+        opacity: 0;
+      }
+      .menu-btn:checked ~ .menu-icon span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+      }
+    }
+
     /* Container */
     .container {
       width: 100%;
       max-width: 1080px;
       display: flex;
       flex-direction: column;
-      gap: 100px;
-      padding: 80px 0 120px 0;
+      gap: 60px;
+      padding: 60px 0 100px 0;
     }
 
     /* Hero Section */
@@ -135,7 +203,7 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      gap: 24px;
+      gap: 20px;
       max-width: 800px;
       margin: 0 auto;
     }
@@ -156,44 +224,98 @@
     }
 
     .hero h1 {
-      font-size: 3.5rem;
+      font-size: 3.2rem;
       font-weight: 600;
       line-height: 1.1;
       letter-spacing: -0.03em;
       color: #ffffff;
     }
 
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+    }
+
     .hero p {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       color: var(--text-secondary);
       font-weight: 300;
       max-width: 600px;
       line-height: 1.6;
     }
 
-    .cta-button {
+    /* App Store Button Container */
+    .appstore-wrapper {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .appstore-badge-btn {
       display: inline-flex;
       align-items: center;
       gap: 12px;
-      background: var(--text-primary);
-      color: var(--bg-color);
-      padding: 14px 28px;
-      border-radius: 100px;
-      font-size: 0.95rem;
-      font-weight: 600;
+      background: #000000;
+      color: #ffffff;
+      padding: 10px 22px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
       text-decoration: none;
       transition: all 0.25s ease;
-      margin-top: 12px;
+      cursor: default;
     }
 
-    .cta-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+    .appstore-badge-btn:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 20px rgba(255, 122, 0, 0.15);
+    }
+
+    .appstore-badge-btn svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
+
+    .appstore-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      line-height: 1.2;
+    }
+
+    .appstore-text .sub {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #a1a1a6;
+    }
+
+    .appstore-text .main {
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .coming-soon-pill {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(255, 122, 0, 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(255, 122, 0, 0.3);
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-left: 6px;
     }
 
     /* Section Typography */
     .section-header {
-      margin-bottom: 32px;
+      margin-bottom: 24px;
     }
 
     .section-title {
@@ -276,65 +398,6 @@
       font-weight: 300;
     }
 
-    /* Feature Grid ("What's Inside") */
-    .features-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
-    }
-
-    @media (min-width: 768px) {
-      .features-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    .feature-card {
-      background: var(--surface-card);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 32px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      backdrop-filter: blur(20px);
-      transition: border-color 0.3s ease;
-    }
-
-    .feature-card:hover {
-      border-color: var(--border-hover);
-    }
-
-    .feature-icon-badge {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      background: rgba(255, 122, 0, 0.08);
-      border: 1px solid rgba(255, 122, 0, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--accent);
-    }
-
-    .feature-icon-badge svg {
-      width: 20px;
-      height: 20px;
-    }
-
-    .feature-card h3 {
-      font-size: 1.25rem;
-      font-weight: 500;
-      color: #fff;
-    }
-
-    .feature-card p {
-      color: var(--text-secondary);
-      font-size: 0.925rem;
-      font-weight: 300;
-      line-height: 1.6;
-    }
-
     /* Footer */
     footer {
       width: 100%;
@@ -344,7 +407,7 @@
       border-top: 1px solid var(--border-color);
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 20px;
       align-items: center;
       color: var(--text-tertiary);
       font-size: 0.825rem;
@@ -381,9 +444,17 @@
       <div class="brand-logo"><span>C</span>C</div>
       CarastoSoft
     </a>
+
+    <!-- Checkbox & Label for Mobile Burger Menu -->
+    <input type="checkbox" id="menu-btn" class="menu-btn">
+    <label for="menu-btn" class="menu-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+
     <nav>
       <a href="#showcase">Showcase</a>
-      <a href="#features">Features</a>
       <a href="../">All Apps</a>
     </nav>
   </header>
@@ -397,10 +468,20 @@
       <p>
         Elevate your iPhone with over 50+ handcrafted clock widgets, 30+ calendar layouts, and full StandBy mode support. Designed for seamless iOS dark and light themes.
       </p>
-      <a href="#" class="cta-button">
-        <span>Download on App Store</span>
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
-      </a>
+
+      <!-- Official App Store Button with "Coming Soon" Badge -->
+      <div class="appstore-wrapper">
+        <div class="appstore-badge-btn">
+          <svg viewBox="0 0 384 512">
+            <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 52.3-12 69.5-34.3z"/>
+          </svg>
+          <div class="appstore-text">
+            <span class="sub">Download on the</span>
+            <span class="main">App Store</span>
+          </div>
+          <span class="coming-soon-pill">Coming Soon</span>
+        </div>
+      </div>
     </section>
 
     <!-- Visual Showcase (Real App Screenshots) -->
@@ -475,49 +556,6 @@
             <h3>60+ Wallpapers</h3>
             <p>Hand-crafted backgrounds designed to match every widget style.</p>
           </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Features Section ("What's Inside CClocks") -->
-    <section id="features">
-      <div class="section-header">
-        <h2 class="section-title">What's Inside CClocks</h2>
-      </div>
-
-      <div class="features-grid">
-        
-        <div class="feature-card">
-          <div class="feature-icon-badge">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-          </div>
-          <h3>50+ Clock Layouts</h3>
-          <p>Choose from classic analog watches, bold digital fonts, word clocks, and progress-tracking timepieces.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon-badge">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"></path></svg>
-          </div>
-          <h3>30+ Calendar Views</h3>
-          <p>Track your month, current week number, and year percentage with versatile, minimalist grid designs.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon-badge">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3"></path></svg>
-          </div>
-          <h3>StandBy & Lock Screen</h3>
-          <p>Full optimization for horizontal StandBy docks and compact circular Lock Screen widgets.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon-badge">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"></path></svg>
-          </div>
-          <h3>60+ Custom Wallpapers</h3>
-          <p>Access high-resolution backgrounds tailored specifically to blend seamlessly with CClocks widgets.</p>
         </div>
 
       </div>
