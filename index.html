@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CarastoSoft — Software & Digital Product Studio</title>
   
-  <!-- Minimalist Pixel-Art 'C' Favicon (Inline SVG) -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'><path fill='%2308090b' d='M0 0h16v16H0z'/><path fill='%23ffffff' d='M4 3h8v2H4zm-2 2h2v6H2zm2 6h8v2H4z'/></svg>">
 
-  <!-- Premium Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -24,6 +22,7 @@
       --text-secondary: #8a919e;
       --text-tertiary: #525866;
       --accent-glow: rgba(255, 255, 255, 0.05);
+      --cclocks-accent: #FF7A00;
     }
 
     * {
@@ -229,6 +228,13 @@
       color: var(--text-secondary);
     }
 
+    /* Status Badge für CClocks */
+    .project-status.pro {
+      border-color: rgba(255, 122, 0, 0.4);
+      color: var(--cclocks-accent);
+      background: rgba(255, 122, 0, 0.08);
+    }
+
     /* Title Block mit Card Icon */
     .project-title-wrapper {
       display: flex;
@@ -250,7 +256,29 @@
       transition: border-color 0.3s ease, transform 0.3s ease;
     }
 
-    .project-card:hover .project-icon {
+    /* Vektor / Vector Icon Container für CClocks Logo */
+    .project-icon-vector {
+      width: 44px;
+      height: 44px;
+      background: #161618;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      flex-shrink: 0;
+      transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .project-icon-vector span {
+      color: var(--cclocks-accent);
+    }
+
+    .project-card:hover .project-icon,
+    .project-card:hover .project-icon-vector {
       border-color: var(--border-hover);
       transform: scale(1.05);
     }
@@ -363,7 +391,6 @@
 </head>
 <body>
 
-  <!-- Navigation Header -->
   <header>
     <a href="/" class="brand">
       <span class="brand-dot"></span>
@@ -377,7 +404,6 @@
 
   <div class="container">
 
-    <!-- Hero Section -->
     <section class="hero">
       <div class="hero-label">Independent Software Studio</div>
       <h1>Crafting refined digital experiences with purpose and precision.</h1>
@@ -386,7 +412,6 @@
       </p>
     </section>
 
-    <!-- Featured Products Section -->
     <section id="products">
       <div class="section-header">
         <h2 class="section-title">Selected Works</h2>
@@ -394,7 +419,6 @@
       
       <div class="projects-grid">
         
-        <!-- Project 1: Dice Dice Dice -->
         <a href="/dicedicedice/" class="project-card">
           <div>
             <div class="project-meta">
@@ -415,27 +439,29 @@
           </div>
         </a>
 
-        <!-- Project 2: Upcoming Works -->
-        <div class="project-card" style="opacity: 0.55; cursor: default;">
+        <a href="/cclocks/" class="project-card">
           <div>
             <div class="project-meta">
-              <span class="project-category">Software Development</span>
-              <span class="project-status">In Development</span>
+              <span class="project-category">iOS Customization</span>
+              <span class="project-status pro">New Release</span>
             </div>
-            <h3 class="project-title" style="margin-bottom: 12px;">Upcoming Projects</h3>
+            <div class="project-title-wrapper">
+              <div class="project-icon-vector"><span>C</span>C</div>
+              <h3 class="project-title">CClocks</h3>
+            </div>
             <p class="project-description">
-              New native software products and tools for iOS and macOS are currently in active development.
+              Personalize your Home Screen, Lock Screen, and StandBy mode with premium, handcrafted clock and calendar widgets.
             </p>
           </div>
-          <div class="project-action" style="color: var(--text-secondary);">
-            <span>Coming Soon</span>
+          <div class="project-action">
+            <span>Explore CClocks</span>
+            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
           </div>
-        </div>
+        </a>
 
       </div>
     </section>
 
-    <!-- Studio Information -->
     <section id="about">
       <div class="section-header">
         <h2 class="section-title">Overview</h2>
@@ -457,7 +483,6 @@
 
   </div>
 
-  <!-- Footer -->
   <footer>
     <div>&copy; 2026 CarastoSoft. All rights reserved.</div>
     <div class="footer-links">
