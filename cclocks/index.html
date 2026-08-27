@@ -16,7 +16,8 @@
   <style>
     :root {
       --bg-color: #08090b;
-      --surface-card: rgba(255, 255, 255, 0.025);
+      --surface-card: rgba(255, 255, 255, 0.03);
+      --surface-card-hover: rgba(255, 255, 255, 0.05);
       --border-color: rgba(255, 255, 255, 0.08);
       --border-hover: rgba(255, 255, 255, 0.2);
       --text-primary: #f5f6f8;
@@ -54,7 +55,7 @@
       width: 100%;
       max-width: 1000px;
       height: 600px;
-      background: radial-gradient(circle at 50% 0%, rgba(255, 122, 0, 0.08), transparent 70%);
+      background: radial-gradient(circle at 50% 0%, rgba(255, 122, 0, 0.1), transparent 70%);
       pointer-events: none;
       z-index: -1;
     }
@@ -171,7 +172,6 @@
         padding: 8px 0;
       }
 
-      /* Toggle menu display when checkbox is checked */
       .menu-btn:checked ~ nav {
         display: flex;
       }
@@ -193,7 +193,7 @@
       max-width: 1080px;
       display: flex;
       flex-direction: column;
-      gap: 60px;
+      gap: 80px;
       padding: 60px 0 100px 0;
     }
 
@@ -224,7 +224,7 @@
     }
 
     .hero h1 {
-      font-size: 3.2rem;
+      font-size: 3.5rem;
       font-weight: 600;
       line-height: 1.1;
       letter-spacing: -0.03em;
@@ -238,10 +238,10 @@
     }
 
     .hero p {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       color: var(--text-secondary);
       font-weight: 300;
-      max-width: 600px;
+      max-width: 620px;
       line-height: 1.6;
     }
 
@@ -316,6 +316,9 @@
     /* Section Typography */
     .section-header {
       margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
     }
 
     .section-title {
@@ -326,22 +329,53 @@
       font-weight: 500;
     }
 
-    /* Screenshots Showcase Grid */
+    .scroll-hint {
+      display: none;
+      font-size: 0.75rem;
+      color: var(--text-tertiary);
+    }
+
+    @media (max-width: 768px) {
+      .scroll-hint {
+        display: block;
+      }
+    }
+
+    /* Screenshots Showcase Grid & Mobile Carousel */
     .showcase-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 24px;
     }
 
-    @media (min-width: 640px) {
+    @media (min-width: 769px) {
       .showcase-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
       }
     }
 
-    @media (min-width: 992px) {
+    /* Horizontal Scroll Layout on Mobile Devices */
+    @media (max-width: 768px) {
       .showcase-grid {
-        grid-template-columns: repeat(3, 1fr);
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 16px;
+        padding-bottom: 16px;
+        margin: 0 -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Hide scrollbar Firefox */
+      }
+
+      .showcase-grid::-webkit-scrollbar {
+        display: none; /* Hide scrollbar Chrome/Safari */
+      }
+
+      .showcase-card {
+        flex: 0 0 82%; /* Shows a peek of the next card */
+        scroll-snap-align: start;
       }
     }
 
@@ -380,13 +414,13 @@
     }
 
     .showcase-info {
-      padding: 20px 24px;
+      padding: 20px;
       background: rgba(255, 255, 255, 0.015);
       border-top: 1px solid var(--border-color);
     }
 
     .showcase-info h3 {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 500;
       color: #fff;
       margin-bottom: 4px;
@@ -396,6 +430,133 @@
       font-size: 0.85rem;
       color: var(--text-secondary);
       font-weight: 300;
+    }
+
+    /* Quick Guide / How to Setup */
+    .setup-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .setup-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .setup-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #ffffff;
+      color: #000000;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-text {
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      font-weight: 400;
+      line-height: 1.5;
+      padding-top: 3px;
+    }
+
+    /* Choice / Pricing Section */
+    .choice-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    @media (min-width: 768px) {
+      .choice-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .choice-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 28px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      transition: border-color 0.3s;
+    }
+
+    .choice-card.pro {
+      border-color: rgba(255, 122, 0, 0.4);
+      background: linear-gradient(180deg, rgba(255, 122, 0, 0.05) 0%, rgba(255, 122, 0, 0.01) 100%);
+    }
+
+    .choice-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.2rem;
+    }
+
+    .choice-card.pro .choice-icon {
+      background: rgba(255, 122, 0, 0.15);
+      color: var(--accent);
+    }
+
+    .choice-details {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .choice-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .choice-header h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .pro-tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: var(--accent);
+      color: #000;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .choice-details p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+      line-height: 1.5;
     }
 
     /* Footer */
@@ -455,6 +616,8 @@
 
     <nav>
       <a href="#showcase">Showcase</a>
+      <a href="#setup">Setup</a>
+      <a href="#pro">Free vs Pro</a>
       <a href="../">All Apps</a>
     </nav>
   </header>
@@ -466,7 +629,7 @@
       <div class="hero-badge">iOS App Showcase</div>
       <h1>CClocks</h1>
       <p>
-        Elevate your iPhone with over 50+ handcrafted clock widgets, 30+ calendar layouts, and full StandBy mode support. Designed for seamless iOS dark and light themes.
+        Transform your Home Screen, Lock Screen, and StandBy mode with premium, handcrafted clock & calendar widgets.
       </p>
 
       <!-- Official App Store Button with "Coming Soon" Badge -->
@@ -484,10 +647,11 @@
       </div>
     </section>
 
-    <!-- Visual Showcase (Real App Screenshots) -->
+    <!-- Visual Showcase (Mobile Horizontal Scroll Carousel) -->
     <section id="showcase">
       <div class="section-header">
         <h2 class="section-title">Visual Showcase</h2>
+        <span class="scroll-hint">Swipe &rarr;</span>
       </div>
 
       <div class="showcase-grid">
@@ -558,6 +722,66 @@
           </div>
         </div>
 
+      </div>
+    </section>
+
+    <!-- Quick Guide / How to Setup -->
+    <section id="setup">
+      <div class="section-header">
+        <h2 class="section-title">Quick Guide — How to Setup</h2>
+      </div>
+
+      <div class="setup-card">
+        <div class="setup-steps">
+          <div class="setup-step">
+            <div class="step-number">1</div>
+            <div class="step-text">
+              Long-press your Home Screen until apps jiggle, then tap the <strong>'+' icon</strong> in the top left corner.
+            </div>
+          </div>
+          <div class="setup-step">
+            <div class="step-number">2</div>
+            <div class="step-text">
+              Search for <strong>'CClocks'</strong>, choose your preferred widget size, and tap <strong>'Add Widget'</strong>.
+            </div>
+          </div>
+          <div class="setup-step">
+            <div class="step-number">3</div>
+            <div class="step-text">
+              Long-press your new widget, select <strong>'Edit Widget'</strong>, and pick your favorite style!
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Your Choice / Free vs Pro -->
+    <section id="pro">
+      <div class="section-header">
+        <h2 class="section-title">Your Choice — Try Free or Go Pro</h2>
+      </div>
+
+      <div class="choice-grid">
+        <div class="choice-card">
+          <div class="choice-icon">🤍</div>
+          <div class="choice-details">
+            <div class="choice-header">
+              <h3>Enjoy Free</h3>
+            </div>
+            <p>Access essential widgets and designs completely free, forever. No hidden pressure.</p>
+          </div>
+        </div>
+
+        <div class="choice-card pro">
+          <div class="choice-icon">👑</div>
+          <div class="choice-details">
+            <div class="choice-header">
+              <h3>Upgrade to Pro</h3>
+              <span class="pro-tag">Ad-Free</span>
+            </div>
+            <p>Unlock all premium designs, full wallpaper downloads, enjoy a 100% ad-free experience, and support development!</p>
+          </div>
+        </div>
       </div>
     </section>
 
