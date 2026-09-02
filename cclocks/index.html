@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CClocks — Premium iOS Clock & Calendar Widgets</title>
   
-  <!-- Minimalist CClocks Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'><path fill='%2308090b' d='M0 0h16v16H0z'/><path fill='%23FF7A00' d='M3 3h5v2H5v6h3v2H3zm6 0h5v2h-3v6h3v2H9z'/></svg>">
 
-  <!-- Premium Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -103,7 +101,7 @@
       color: var(--accent);
     }
 
-    /* Mobile Menu Toggle (Checkbox Hack) */
+    /* Mobile Menu Toggle */
     .menu-btn {
       display: none;
     }
@@ -265,7 +263,7 @@
       border: 1px solid rgba(255, 255, 255, 0.2);
       text-decoration: none;
       transition: all 0.25s ease;
-      cursor: default;
+      cursor: pointer;
     }
 
     .appstore-badge-btn:hover {
@@ -313,6 +311,33 @@
       margin-left: 6px;
     }
 
+    /* Video Showcase Section */
+    .video-showcase {
+      width: 100%;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .video-container {
+      width: 100%;
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      background: var(--surface-card);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      transition: border-color 0.3s ease;
+    }
+
+    .video-container:hover {
+      border-color: var(--border-hover);
+    }
+
+    .video-container video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
     /* Section Typography */
     .section-header {
       margin-bottom: 24px;
@@ -354,7 +379,6 @@
       }
     }
 
-    /* Horizontal Scroll Layout on Mobile Devices */
     @media (max-width: 768px) {
       .showcase-grid {
         display: flex;
@@ -366,15 +390,15 @@
         padding-left: 20px;
         padding-right: 20px;
         -webkit-overflow-scrolling: touch;
-        scrollbar-width: none; /* Hide scrollbar Firefox */
+        scrollbar-width: none;
       }
 
       .showcase-grid::-webkit-scrollbar {
-        display: none; /* Hide scrollbar Chrome/Safari */
+        display: none;
       }
 
       .showcase-card {
-        flex: 0 0 82%; /* Shows a peek of the next card */
+        flex: 0 0 82%;
         scroll-snap-align: start;
       }
     }
@@ -599,16 +623,14 @@
 </head>
 <body>
 
-  <!-- Navigation Header -->
   <header>
     <a href="../" class="brand">
       <div class="brand-logo"><span>C</span>C</div>
       CarastoSoft
     </a>
 
-    <!-- Checkbox & Label for Mobile Burger Menu -->
-    <input type="checkbox" id="menu-btn" class="menu-btn">
-    <label for="menu-btn" class="menu-icon">
+    <input type="checkbox" id="menu-btn" class="menu-btn" aria-label="Toggle navigation">
+    <label for="menu-btn" class="menu-icon" aria-label="Open menu">
       <span></span>
       <span></span>
       <span></span>
@@ -624,7 +646,6 @@
 
   <div class="container">
 
-    <!-- Hero Section -->
     <section class="hero">
       <div class="hero-badge">iOS App Showcase</div>
       <h1>CClocks</h1>
@@ -632,9 +653,8 @@
         Transform your Home Screen, Lock Screen, and StandBy mode with premium, handcrafted clock & calendar widgets.
       </p>
 
-      <!-- Official App Store Button with "Coming Soon" Badge -->
       <div class="appstore-wrapper">
-        <div class="appstore-badge-btn">
+        <a href="#" class="appstore-badge-btn">
           <svg viewBox="0 0 384 512">
             <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 52.3-12 69.5-34.3z"/>
           </svg>
@@ -643,11 +663,20 @@
             <span class="main">App Store</span>
           </div>
           <span class="coming-soon-pill">Coming Soon</span>
-        </div>
+        </a>
       </div>
     </section>
 
-    <!-- Visual Showcase (Mobile Horizontal Scroll Carousel) -->
+    <section class="video-showcase">
+      <div class="video-container">
+        <video autoplay loop muted playsinline poster="clock.png">
+          <source src="Introducing.mov" type="video/quicktime">
+          <source src="Introducing.mp4" type="video/mp4">
+          Your browser does not support HTML video.
+        </video>
+      </div>
+    </section>
+
     <section id="showcase">
       <div class="section-header">
         <h2 class="section-title">Visual Showcase</h2>
@@ -656,7 +685,6 @@
 
       <div class="showcase-grid">
         
-        <!-- Screenshot 1: Clock Widgets -->
         <div class="showcase-card">
           <div class="showcase-img-wrapper">
             <img src="clock.png" alt="50+ Unique Clock Widgets">
@@ -667,7 +695,6 @@
           </div>
         </div>
 
-        <!-- Screenshot 2: Calendar Styles -->
         <div class="showcase-card">
           <div class="showcase-img-wrapper">
             <img src="calendar.png" alt="Over 30 Calendar Styles">
@@ -678,7 +705,6 @@
           </div>
         </div>
 
-        <!-- Screenshot 3: Accent Colors -->
         <div class="showcase-card">
           <div class="showcase-img-wrapper">
             <img src="Color.png" alt="Custom Accent Colors">
@@ -689,7 +715,6 @@
           </div>
         </div>
 
-        <!-- Screenshot 4: iOS Modes -->
         <div class="showcase-card">
           <div class="showcase-img-wrapper">
             <img src="ios%20theme.png" alt="Light, Dark & Tinted Themes">
@@ -700,7 +725,6 @@
           </div>
         </div>
 
-        <!-- Screenshot 5: StandBy Support -->
         <div class="showcase-card">
           <div class="showcase-img-wrapper">
             <img src="Standby.png" alt="Full StandBy Support">
@@ -711,7 +735,6 @@
           </div>
         </div>
 
-        <!-- Screenshot 6: Wallpapers -->
         <div class="showcase-card">
           <div class="showcase-img-wrapper">
             <img src="wallpaper.png" alt="60+ Exclusive Wallpapers">
@@ -725,7 +748,6 @@
       </div>
     </section>
 
-    <!-- Quick Guide / How to Setup -->
     <section id="setup">
       <div class="section-header">
         <h2 class="section-title">Quick Guide — How to Setup</h2>
@@ -755,7 +777,6 @@
       </div>
     </section>
 
-    <!-- Your Choice / Free vs Pro -->
     <section id="pro">
       <div class="section-header">
         <h2 class="section-title">Your Choice — Try Free or Go Pro</h2>
@@ -787,7 +808,6 @@
 
   </div>
 
-  <!-- Footer -->
   <footer>
     <div>&copy; 2026 CarastoSoft. All rights reserved.</div>
     <div class="footer-links">
