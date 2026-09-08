@@ -3,10 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CClocks — Premium iOS Clock & Calendar Widgets</title>
   
+  <!-- Primary Meta Tags -->
+  <title>CClocks — Premium iOS Clock & Calendar Widgets</title>
+  <meta name="title" content="CClocks — Premium iOS Clock & Calendar Widgets">
+  <meta name="description" content="Transform your iOS Home Screen, Lock Screen, and StandBy mode with handcrafted clock widgets, custom themes, and exclusive wallpapers.">
+  <meta name="theme-color" content="#08090b">
+
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="CClocks — Premium iOS Clock & Calendar Widgets">
+  <meta property="og:description" content="Transform your iOS Home Screen, Lock Screen, and StandBy mode with handcrafted clock widgets and exclusive wallpapers.">
+  <meta property="og:image" content="clock.png">
+
+  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'><path fill='%2308090b' d='M0 0h16v16H0z'/><path fill='%23FF7A00' d='M3 3h5v2H5v6h3v2H3zm6 0h5v2h-3v6h3v2H9z'/></svg>">
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -22,6 +35,10 @@
       --text-secondary: #8a919e;
       --text-tertiary: #525866;
       --accent: #FF7A00;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     * {
@@ -332,13 +349,13 @@
       border-color: var(--border-hover);
     }
 
-.video-container video {
-  width: 100%;
-  max-width: 100%;
-  max-height: 85vh;
-  object-fit: cover;
-  display: block;
-}
+    .video-container video {
+      width: 100%;
+      max-width: 100%;
+      max-height: 85vh;
+      object-fit: cover;
+      display: block;
+    }
 
     /* Section Typography */
     .section-header {
@@ -626,8 +643,8 @@
 <body>
 
   <header>
-    <a href="../" class="brand">
-      <div class="brand-logo"><span>C</span>C</div>
+    <a href="../" class="brand" aria-label="CarastoSoft Homepage">
+      <div class="brand-logo" aria-hidden="true"><span>C</span>C</div>
       CarastoSoft
     </a>
 
@@ -646,7 +663,7 @@
     </nav>
   </header>
 
-  <div class="container">
+  <main class="container">
 
     <section class="hero">
       <div class="hero-badge">iOS App Showcase</div>
@@ -656,8 +673,8 @@
       </p>
 
       <div class="appstore-wrapper">
-        <a href="#" class="appstore-badge-btn">
-          <svg viewBox="0 0 384 512">
+        <a href="#" class="appstore-badge-btn" aria-label="Download CClocks on the App Store (Coming Soon)">
+          <svg viewBox="0 0 384 512" aria-hidden="true">
             <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 52.3-12 69.5-34.3z"/>
           </svg>
           <div class="appstore-text">
@@ -671,11 +688,11 @@
 
     <section class="video-showcase">
       <div class="video-container">
-<video autoplay loop muted playsinline poster="clock.png">
-  <source src="Introducing.mp4" type="video/mp4">
-  <source src="Introducing.mov" type="video/quicktime">
-  Your browser does not support HTML video.
-</video>
+        <video autoplay loop muted playsinline poster="clock.png">
+          <source src="Introducing.mp4" type="video/mp4">
+          <source src="Introducing.mov" type="video/quicktime">
+          Your browser does not support HTML video.
+        </video>
       </div>
     </section>
 
@@ -689,7 +706,7 @@
         
         <div class="showcase-card">
           <div class="showcase-img-wrapper">
-            <img src="clock.png" alt="50+ Unique Clock Widgets">
+            <img src="clock.png" alt="50+ Unique Clock Widgets" width="400" height="300" loading="lazy">
           </div>
           <div class="showcase-info">
             <h3>50+ Clock Widgets</h3>
@@ -699,7 +716,7 @@
 
         <div class="showcase-card">
           <div class="showcase-img-wrapper">
-            <img src="calendar.png" alt="Over 30 Calendar Styles">
+            <img src="calendar.png" alt="Over 30 Calendar Styles" width="400" height="300" loading="lazy">
           </div>
           <div class="showcase-info">
             <h3>30+ Calendar Styles</h3>
@@ -709,7 +726,7 @@
 
         <div class="showcase-card">
           <div class="showcase-img-wrapper">
-            <img src="Color.png" alt="Custom Accent Colors">
+            <img src="Color.png" alt="Custom Accent Colors" width="400" height="300" loading="lazy">
           </div>
           <div class="showcase-info">
             <h3>Custom Accents</h3>
@@ -719,7 +736,7 @@
 
         <div class="showcase-card">
           <div class="showcase-img-wrapper">
-            <img src="ios%20theme.png" alt="Light, Dark & Tinted Themes">
+            <img src="ios%20theme.png" alt="Light, Dark & Tinted Themes" width="400" height="300" loading="lazy">
           </div>
           <div class="showcase-info">
             <h3>Native iOS Themes</h3>
@@ -729,7 +746,7 @@
 
         <div class="showcase-card">
           <div class="showcase-img-wrapper">
-            <img src="Standby.png" alt="Full StandBy Support">
+            <img src="Standby.png" alt="Full StandBy Support" width="400" height="300" loading="lazy">
           </div>
           <div class="showcase-info">
             <h3>StandBy Mode</h3>
@@ -739,7 +756,7 @@
 
         <div class="showcase-card">
           <div class="showcase-img-wrapper">
-            <img src="wallpaper.png" alt="60+ Exclusive Wallpapers">
+            <img src="wallpaper.png" alt="60+ Exclusive Wallpapers" width="400" height="300" loading="lazy">
           </div>
           <div class="showcase-info">
             <h3>60+ Wallpapers</h3>
@@ -786,7 +803,7 @@
 
       <div class="choice-grid">
         <div class="choice-card">
-          <div class="choice-icon">🤍</div>
+          <div class="choice-icon" aria-hidden="true">🤍</div>
           <div class="choice-details">
             <div class="choice-header">
               <h3>Enjoy Free</h3>
@@ -796,7 +813,7 @@
         </div>
 
         <div class="choice-card pro">
-          <div class="choice-icon">👑</div>
+          <div class="choice-icon" aria-hidden="true">👑</div>
           <div class="choice-details">
             <div class="choice-header">
               <h3>Upgrade to Pro</h3>
@@ -808,7 +825,7 @@
       </div>
     </section>
 
-  </div>
+  </main>
 
   <footer>
     <div>&copy; 2026 CarastoSoft. All rights reserved.</div>
