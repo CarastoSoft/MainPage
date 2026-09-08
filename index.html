@@ -3,10 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CarastoSoft — Software & Digital Product Studio</title>
   
+  <!-- Primary Meta Tags -->
+  <title>CarastoSoft — Software & Digital Product Studio</title>
+  <meta name="title" content="CarastoSoft — Software & Digital Product Studio">
+  <meta name="description" content="Independent development studio based in Germany prioritizing native performance, clean architecture, and intuitive iOS apps.">
+  <meta name="theme-color" content="#08090b">
+
+  <!-- Open Graph / Social Media Previews -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://carastosoft.com/">
+  <meta property="og:title" content="CarastoSoft — Software & Digital Product Studio">
+  <meta property="og:description" content="Crafting refined digital experiences with purpose and precision. Creators of CClocks & Dice Dice Dice.">
+
+  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'><path fill='%2308090b' d='M0 0h16v16H0z'/><path fill='%23ffffff' d='M4 3h8v2H4zm-2 2h2v6H2zm2 6h8v2H4z'/></svg>">
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -23,6 +36,10 @@
       --text-tertiary: #525866;
       --accent-glow: rgba(255, 255, 255, 0.05);
       --cclocks-accent: #FF7A00;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     * {
@@ -256,7 +273,6 @@
       transition: border-color 0.3s ease, transform 0.3s ease;
     }
 
-    /* Vektor / Vector Icon Container für CClocks Logo */
     .project-icon-vector {
       width: 44px;
       height: 44px;
@@ -392,8 +408,8 @@
 <body>
 
   <header>
-    <a href="/" class="brand">
-      <span class="brand-dot"></span>
+    <a href="/" class="brand" aria-label="CarastoSoft Homepage">
+      <span class="brand-dot" aria-hidden="true"></span>
       CarastoSoft
     </a>
     <nav>
@@ -402,7 +418,7 @@
     </nav>
   </header>
 
-  <div class="container">
+  <main class="container">
 
     <section class="hero">
       <div class="hero-label">Independent Software Studio</div>
@@ -426,7 +442,7 @@
               <span class="project-status">Available</span>
             </div>
             <div class="project-title-wrapper">
-              <img src="dice_icon.png" alt="Dice Dice Dice Icon" class="project-icon">
+              <img src="dice_icon.png" alt="Dice Dice Dice Icon" class="project-icon" width="44" height="44">
               <h3 class="project-title">Dice Dice Dice</h3>
             </div>
             <p class="project-description">
@@ -435,7 +451,7 @@
           </div>
           <div class="project-action">
             <span>Explore Project</span>
-            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
+            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
           </div>
         </a>
 
@@ -446,7 +462,7 @@
               <span class="project-status pro">New Release</span>
             </div>
             <div class="project-title-wrapper">
-              <div class="project-icon-vector"><span>C</span>C</div>
+              <div class="project-icon-vector" aria-hidden="true"><span>C</span>C</div>
               <h3 class="project-title">CClocks</h3>
             </div>
             <p class="project-description">
@@ -455,7 +471,7 @@
           </div>
           <div class="project-action">
             <span>Explore CClocks</span>
-            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
+            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
           </div>
         </a>
 
@@ -481,7 +497,7 @@
       </div>
     </section>
 
-  </div>
+  </main>
 
   <footer>
     <div>&copy; 2026 CarastoSoft. All rights reserved.</div>
