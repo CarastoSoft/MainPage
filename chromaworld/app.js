@@ -39,7 +39,8 @@ CloudKit.configure({
 });
 
 const container = CloudKit.getDefaultContainer();
-const publicDB = container.publicDatabase;
+// Korrektes Property für die Public Database in CloudKit JS:
+const publicDB = container.publicCloudDatabase;
 
 // 3. MapKit JS Initialisierung mit Token für carastosoft.com
 mapkit.init({
@@ -48,10 +49,10 @@ mapkit.init({
     }
 });
 
-// 4. Karte erstellen inklusive Steuerelementen
+// 4. Karte erstellen (Mit korrekter Region/Span statt 'zoom')
 const map = new mapkit.Map("map", {
-    center: new mapkit.Coordinate(50.1109, 8.6821), // Startpunkt (z.B. Frankfurt/Aschaffenburg-Region)
-    zoom: 6,
+    center: new mapkit.Coordinate(50.1109, 8.6821),
+    span: new mapkit.CoordinateSpan(5.0, 5.0), // Span ersetzt das 'zoom'-Property
     mapType: mapkit.Map.MapTypes.Standard,
     showsCompass: mapkit.FeatureVisibility.Adaptive,
     showsZoomControl: true,
@@ -64,7 +65,7 @@ async function fetchAndRenderMapTiles() {
     const query = { recordType: 'MapTile' };
     
     try {
-        const response =.await publicDB.performQuery(query);
+        const response = await publicDB.performQuery(query);
         if (!response || !response.records) {
             console.log("Keine Records von CloudKit erhalten.");
             return;
