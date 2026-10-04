@@ -1,31 +1,29 @@
-// 1. CloudKit JS Konfiguration
+// 1. CloudKit Konfiguration
 CloudKit.configure({
     containers: [{
         containerIdentifier: 'iCloud.CarastoSoft.ChromaWorld',
         apiTokenAuth: {
-            apiToken: 'DEIN_CLOUDKIT_API_TOKEN_HIER'
+            apiToken: 'c91102546b16164dfd9f890a378d5fca37e08fb558b63b1b60eb57f2dd93d9b6' // <-- Hier den Token aus Schritt 1 einfügen
         },
-        environment: 'development' // Im Release später auf 'production' umstellen
+        environment: 'development' // Nach dem App Store Release auf 'production' stellen
     }]
 });
 
-const container = CloudKit.getDefaultContainer();
-const publicDB = container.publicDatabase;
+const publicDB = CloudKit.getDefaultContainer().publicDatabase;
 
 // 2. MapKit JS Initialisierung
 mapkit.init({
     authorizationCallback: function(done) {
-        // Hier deinen generierten MapKit JS JWT-Token eintragen
-        done("DEIN_MAPKIT_JS_TOKEN");
+        done("eyJraWQiOiJKQ0Q1MjdRNTNWIiwidHlwIjoiSldUIiwiYWxnIjoiRVMyNTYifQ.eyJpYXQiOjE3OTExMjIzMzMsImlzcyI6IkdONUFDNVRUNzMiLCJleHAiOjE4MDY2NzQzMzN9.QWk20ASSvyAd4AiG_CpWW1-1AO8SikNm0vW7NfmlairtTFiRVP0iGFKfuVReSGfUFyrFMKqVgqNUK22472Wtiw"); // <-- Hier deinen generierten MapKit JS Token einfügen
     }
 });
 
 const map = new mapkit.Map("map", {
-    center: new mapkit.Coordinate(50.0, 10.0), // Start-Position (z.B. Deutschland)
-    zoom: 5
+    center: new mapkit.Coordinate(50.1109, 8.6821),
+    zoom: 4
 });
 
-// 3. MapTile-Records aus CloudKit laden & Zeichnen
+// 3. MapTiles abfragen & Polygone auf der Karte zeichnen
 async function fetchAndRenderMapTiles() {
     const query = { recordType: 'MapTile' };
     
@@ -37,10 +35,8 @@ async function fetchAndRenderMapTiles() {
             const tileID = record.fields.tileID.value;
             const hex = record.fields.dominantHex.value;
             
-            // Bounding Box aus Geohash berechnen
             const bbox = decodeGeohashToBBox(tileID);
             
-            // Polygon für Kachel erstellen
             const points = [
                 new mapkit.Coordinate(bbox.minLat, bbox.minLon),
                 new mapkit.Coordinate(bbox.maxLat, bbox.minLon),
@@ -51,41 +47,19 @@ async function fetchAndRenderMapTiles() {
             const overlay = new mapkit.PolygonOverlay(points, {
                 style: new mapkit.Style({
                     fillColor: hex,
-                    fillOpacity: 0.6,
+                    fillOpacity: 0.65,
                     strokeColor: "#FFFFFF",
                     lineWidth: 1
                 })
             });
             
-            // Kachel-Daten an Overlay binden für Klick-Events
-            overlay.recordData = record.fields;
             map.addOverlay(overlay);
         });
     } catch (error) {
-        console.error("Fehler beim Laden der CloudKit-Daten:", error);
+        console.error("Fehler beim Laden aus CloudKit:", error);
     }
 }
 
-// 4. Klick-Event auf Kachel (Detailansicht / Stat-Sheet)
-map.addEventListener("select", function(event) {
-    if (event.overlay && event.overlay.recordData) {
-        const fields = event.overlay.recordData;
-        
-        document.getElementById("hex-code").innerText = fields.dominantHex.value.toUpperCase();
-        document.getElementById("color-name").innerText = fields.colorName?.value || "Dominant Color";
-        
-        // JSON-ColorCounts dekodieren & Top 10 auflisten
-        if (fields.colorCountsData) {
-            const counts = JSON.parse(fields.colorCountsData.value);
-            const total = Object.values(counts).reduce((a, b) => a + b, 0);
-            document.getElementById("total-pixels").innerText = total;
-        }
-        
-        document.getElementById("detail-sheet").classList.remove("hidden");
-    }
-});
-
-// Starten sobald Map bereit ist
 mapkit.addEventListener("configuration-change", () => {
     fetchAndRenderMapTiles();
 });
