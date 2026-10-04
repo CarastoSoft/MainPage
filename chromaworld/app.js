@@ -41,28 +41,37 @@ CloudKit.configure({
 const container = CloudKit.getDefaultContainer();
 const publicDB = container.publicDatabase;
 
-// 3. MapKit JS Initialisierung
+// 3. MapKit JS Initialisierung mit Token für carastosoft.com
 mapkit.init({
     authorizationCallback: function(done) {
         done("eyJraWQiOiJNWDJCUzU4MjNWIiwidHlwIjoiSldUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJHTjVBQzVUVDczIiwiaWF0IjoxNzkxMTMxMDQ3LCJvcmlnaW4iOiJjYXJhc3Rvc29mdC5jb20iLCJzY29wZSI6Im1hcGtpdF9qcyJ9.T685nKj2NkXG_YJ7WQYCeo8PXStW_KJpgFf--mfNhJs4I701IAkT3oA9Mjq3qyrK903o65UP4aky-ltN2Ke8Mw");
     }
 });
 
+// 4. Karte erstellen inklusive Steuerelementen
 const map = new mapkit.Map("map", {
-    center: new mapkit.Coordinate(50.1109, 8.6821),
-    zoom: 4,
-    mapType: mapkit.Map.MapTypes.Standard
+    center: new mapkit.Coordinate(50.1109, 8.6821), // Startpunkt (z.B. Frankfurt/Aschaffenburg-Region)
+    zoom: 6,
+    mapType: mapkit.Map.MapTypes.Standard,
+    showsCompass: mapkit.FeatureVisibility.Adaptive,
+    showsZoomControl: true,
+    showsMapTypeControl: true,
+    showsUserLocationControl: true
 });
 
-// 4. MapTiles aus CloudKit laden & rendern
+// 5. MapTiles aus CloudKit laden & rendern
 async function fetchAndRenderMapTiles() {
     const query = { recordType: 'MapTile' };
     
     try {
-        const response = await publicDB.performQuery(query);
-        if (!response || !response.records) return;
+        const response =.await publicDB.performQuery(query);
+        if (!response || !response.records) {
+            console.log("Keine Records von CloudKit erhalten.");
+            return;
+        }
 
         const records = response.records;
+        console.log(`${records.length} MapTiles aus CloudKit geladen.`);
         
         records.forEach(record => {
             const tileID = record.fields.tileID ? record.fields.tileID.value : null;
@@ -72,7 +81,7 @@ async function fetchAndRenderMapTiles() {
 
             const bbox = decodeGeohashToBBox(tileID);
             
-            // Polygon im Uhrzeigersinn definieren
+            // Polygon-Punkte definieren
             const points = [
                 new mapkit.Coordinate(bbox.maxLat, bbox.minLon),
                 new mapkit.Coordinate(bbox.maxLat, bbox.maxLon),
@@ -96,7 +105,7 @@ async function fetchAndRenderMapTiles() {
     }
 }
 
-// MapKit Initialisierungs-Ablauf
+// MapKit Initialisierungs-Ablauf sicherstellen
 if (mapkit.isInitialized) {
     fetchAndRenderMapTiles();
 } else {
