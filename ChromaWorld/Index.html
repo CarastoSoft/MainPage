@@ -1,1 +1,33 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChromaWorld - Web Viewer</title>
+    
+    <!-- Apple MapKit JS & CloudKit JS -->
+    <script src="https://cdn.apple-mapkit.com/mk/5.x.x/mapkit.js"></script>
+    <script src="https://cdn.apple-cloudkit.com/ck/2/cloudkit.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="map"></div>
 
+    <!-- Stat-Sheet Overlay (analog zur iOS App) -->
+    <div id="detail-sheet" class="sheet hidden">
+        <button id="close-btn">&times;</button>
+        <h2 id="color-name">Loading...</h2>
+        <p id="hex-code">#000000</p>
+        <hr>
+        <div class="stat-row">
+            <span>Total Pixels:</span>
+            <strong id="total-pixels">0</strong>
+        </div>
+        <div id="top-colors-list"></div>
+    </div>
+
+    <script src="geohash.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
