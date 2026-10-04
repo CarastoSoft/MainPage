@@ -44,7 +44,7 @@ const publicDB = container.publicDatabase;
 // 3. MapKit JS Initialisierung
 mapkit.init({
     authorizationCallback: function(done) {
-        done("eyJ0eXAiOiJKV1QiLCJraWQiOiJKQ0Q1MjdRNTNWIiwiYWxnIjoiRVMyNTYifQ.eyJpYXQiOjE3OTExMjgxMTYsImV4cCI6MTgwNjY4MDExNiwic3ViIjoiR041QUM1VFQ3My5tYXBzLmNvbS5jYXJhc3Rvc29mdC5jaHJvbWF3b3JsZCIsImlzcyI6IkdONUFDNVRUNzMiLCJvcmlnaW4iOiJjYXJhc3Rvc29mdC5jb20ifQ.Ri61MExwyN6-FsAUSD1EaJZj64kZrTCqAWvtf4HXKP0Rcwf2HdxiBrt75v5ph-uTzqfaHOS7zSBOEOOj_Be1Yw");
+        done("eyJhbGciOiJFUzI1NiIsImtpZCI6IkpDRDUyN1E1M1YiLCJ0eXAiOiJKV1QifQ.eyJvcmlnaW4iOiJjYXJhc3Rvc29mdC5jb20iLCJpc3MiOiJHTjVBQzVUVDczIiwiaWF0IjoxNzkxMTI4NjI2LCJzdWIiOiJHTjVBQzVUVDczLm1hcHMuY29tLmNhcmFzdG9zb2Z0LmNocm9tYXdvcmxkIiwiZXhwIjoxODA2NjgwNjI2fQ.BqKCM6MFyMJlppNVZWLvnrp1EJv8o2u_1MCMBU8ia5cMPlGN8wSvsnxbddYUELPPnPlD8t--JhXhGctgxYhOpA");
     }
 });
 
