@@ -34,7 +34,7 @@ CloudKit.configure({
         apiTokenAuth: {
             apiToken: 'c91102546b16164dfd9f890a378d5fca37e08fb558b63b1b60eb57f2dd93d9b6'
         },
-        environment: 'development' // Nach dem App Store Release auf 'production' stellen
+        environment: 'development'
     }]
 });
 
@@ -54,27 +54,30 @@ const map = new mapkit.Map("map", {
     mapType: mapkit.Map.MapTypes.Standard
 });
 
-// 4. MapTiles abfragen & Polygone auf der Karte zeichnen
+// 4. MapTiles aus CloudKit laden & rendern
 async function fetchAndRenderMapTiles() {
     const query = { recordType: 'MapTile' };
     
     try {
         const response = await publicDB.performQuery(query);
+        if (!response || !response.records) return;
+
         const records = response.records;
         
         records.forEach(record => {
             const tileID = record.fields.tileID ? record.fields.tileID.value : null;
-            const hex = record.fields.dominantHex ? record.fields.dominantHex.value : "#FF0000";
+            const hex = record.fields.dominantHex ? record.fields.dominantHex.value : "#007AFF";
             
             if (!tileID) return;
 
             const bbox = decodeGeohashToBBox(tileID);
             
+            // Polygon im Uhrzeigersinn definieren
             const points = [
-                new mapkit.Coordinate(bbox.minLat, bbox.minLon),
                 new mapkit.Coordinate(bbox.maxLat, bbox.minLon),
                 new mapkit.Coordinate(bbox.maxLat, bbox.maxLon),
-                new mapkit.Coordinate(bbox.minLat, bbox.maxLon)
+                new mapkit.Coordinate(bbox.minLat, bbox.maxLon),
+                new mapkit.Coordinate(bbox.minLat, bbox.minLon)
             ];
             
             const overlay = new mapkit.PolygonOverlay(points, {
@@ -93,12 +96,11 @@ async function fetchAndRenderMapTiles() {
     }
 }
 
-// Initiales Laden ausführen
-mapkit.addEventListener("configuration-change", () => {
-    fetchAndRenderMapTiles();
-});
-
-// Fallback-Aufruf, falls MapKit Bereitschafts-Event bereits gefeuert wurde
+// MapKit Initialisierungs-Ablauf
 if (mapkit.isInitialized) {
     fetchAndRenderMapTiles();
+} else {
+    mapkit.addEventListener("configuration-change", () => {
+        fetchAndRenderMapTiles();
+    }, { once: true });
 }
