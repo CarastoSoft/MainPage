@@ -44,7 +44,7 @@ const publicDB = container.publicDatabase;
 // 3. MapKit JS Initialisierung
 mapkit.init({
     authorizationCallback: function(done) {
-        done("eyJhbGciOiJFUzI1NiIsImtpZCI6IkpDRDUyN1E1M1YiLCJ0eXAiOiJKV1QifQ.eyJleHAiOjE4MDY2Nzg4MTYsIm9yaWdpbiI6ImNhcmFzdG9zb2Z0LmNvbSIsImlhdCI6MTc5MTEyNjgxNiwiaXNzIjoiR041QUM1VFQ3MyJ9.knTQPwIpwtQTeO2SKOOQ50Vuqxv61U0_t6STvYJ8MuxNooGSBl-xBtS3JK_ATw8Gnr8IGn6xMWWQtdbhG4AIHw");
+        done("eyJraWQiOiJKQ0Q1MjdRNTNWIiwidHlwIjoiSldUIiwiYWxnIjoiRVMyNTYifQ.eyJpYXQiOjE3OTExMjc0NzUsIm9yaWdpbiI6ImNhcmFzdG9zb2Z0LmNvbSIsImV4cCI6MTgwNjY3OTQ3NSwiaXNzIjoiR041QUM1VFQ3MyJ9.OpsgQw2o4rD-HxVnuimd_suDVehS_7HhEuWTc4SI2GasQ0FaI3PdwxYoSRNg3Niz-mCS7GYE9eBq_9oQnGOLzw");
     }
 });
 
