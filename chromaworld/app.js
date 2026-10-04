@@ -44,7 +44,7 @@ const publicDB = container.publicDatabase;
 // 3. MapKit JS Initialisierung
 mapkit.init({
     authorizationCallback: function(done) {
-        done("eyJ0eXAiOiJKV1QiLCJraWQiOiJKQ0Q1MjdRNUpWIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJHTjVBQzVUVDczIiwiaWF0IjoxNzkxMTMwNjgzLCJleHAiOjE3OTEyMTcwODMsIm9yaWdpbiI6IiouY2FyYXN0b3NvZnQuY29tIiwic3ViIjoiR041QUM1VFQ3My5tYXBzLmNvbS5jYXJhc3Rvc29mdC5jaHJvbWF3b3JsZCJ9.w2GzJlBH6caH7ecx6c-r4r5QCAp1Wbvl9f3_nYZegzkEnP0zj-O_jO9lLSynnDYcuhFqxP1xS3V5YCV-VK_mcw");
+        done("EyJraWQiOiJNWDJCUzU4MjNWIiwidHlwIjoiSldUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJHTjVBQzVUVDczIiwiaWF0IjoxNzkxMTMxMDQ3LCJvcmlnaW4iOiJjYXJhc3Rvc29mdC5jb20iLCJzY29wZSI6Im1hcGtpdF9qcyJ9.T685nKj2NkXG_YJ7WQYCeo8PXStW_KJpgFf--mfNhJs4I701IAkT3oA9Mjq3qyrK903o65UP4aky-ltN2Ke8Mw");
     }
 });
 
