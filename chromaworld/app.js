@@ -97,16 +97,20 @@ map.addEventListener("single-tap", (event) => {
 // 7. UI Steuerung (Kartenstile)
 document.querySelectorAll(".picker-btn").forEach(btn => {
     btn.addEventListener("click", (e) => {
-        document.querySelectorAll(".picker-btn").forEach(b => b.classList.remove("active"));
-        e.target.classList.add("active");
+        // e.currentTarget garantiert, dass wir den Button erwischen (nicht Child-Elemente)
+        const targetBtn = e.currentTarget;
         
-        const style = e.target.getAttribute("data-style");
+        document.querySelectorAll(".picker-btn").forEach(b => b.classList.remove("active"));
+        targetBtn.classList.add("active");
+        
+        const style = targetBtn.getAttribute("data-style");
+
         if (style === "hybrid") {
-            map.mapType = mapkit.Map.MapTypes.Hybrid; // Hybrid = Satellit + Straßennamen & Orte
+            map.mapType = mapkit.Map.MapTypes.Hybrid;
             map.showsPointsOfInterest = true;
         } else if (style === "satellite") {
-            map.mapType = mapkit.Map.MapTypes.Imagery; // Imagery = Reiner Satellit
-            map.showsPointsOfInterest = false;        // Deaktiviert Beschriftungen & Ortsnamen
+            map.mapType = mapkit.Map.MapTypes.Imagery; // Reines Satellitenbild
+            map.showsPointsOfInterest = false;
         } else if (style === "standard") {
             map.mapType = mapkit.Map.MapTypes.Standard;
             map.showsPointsOfInterest = true;
