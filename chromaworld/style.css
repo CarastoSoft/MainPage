@@ -1,10 +1,17 @@
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
 body, html {
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     overflow: hidden;
+    background: #000;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+    color: #fff;
 }
 
 #map {
@@ -12,31 +19,205 @@ body, html {
     height: 100%;
 }
 
-.sheet {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    width: 300px;
-    background: rgba(25, 25, 25, 0.9);
-    backdrop-filter: blur(10px);
+/* Glassmorphism Buttons & Overlays */
+.glass-btn {
+    background: rgba(255, 255, 255, 0.2);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     color: #fff;
-    padding: 20px;
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-    transition: transform 0.3s ease;
-}
-
-.sheet.hidden {
-    transform: translateY(150%);
-}
-
-#close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 20px;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+}
+
+.glass-btn:active {
+    transform: scale(0.95);
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.top-controls {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    right: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.top-controls > * {
+    pointer-events: auto;
+}
+
+/* Segmented Picker */
+.segmented-picker {
+    background: rgba(255, 255, 255, 0.18);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 3px;
+    display: flex;
+    gap: 2px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+}
+
+.picker-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.picker-btn.active {
+    background: rgba(255, 255, 255, 0.35);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* Compass / North Button */
+.north-btn {
+    position: absolute;
+    bottom: 40px;
+    right: 16px;
+    z-index: 100;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.north-btn.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.8);
+}
+
+/* Bottom Sheet */
+.detail-sheet {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(25, 25, 25, 0.75);
+    -webkit-backdrop-filter: blur(25px);
+    backdrop-filter: blur(25px);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px 20px 0 0;
+    padding: 12px 20px 28px 20px;
+    z-index: 200;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s cubic-bezier(0.1, 0.9, 0.2, 1.0);
+}
+
+.detail-sheet.hidden {
+    transform: translateY(100%);
+}
+
+.sheet-handle {
+    width: 36px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+    margin: 0 auto 12px auto;
+}
+
+.sheet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sheet-header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.monospaced {
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.color-preview {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 14px 0;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+    margin-bottom: 14px;
+}
+
+.stat-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.stat-value {
+    font-weight: 700;
+    font-size: 17px;
+}
+
+.breakdown-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 8px;
+}
+
+.horizontal-scroll {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.color-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.chip-box {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
 }
