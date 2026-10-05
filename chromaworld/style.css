@@ -58,6 +58,22 @@ body, html {
     pointer-events: auto;
 }
 
+/* App Title Section */
+.top-left-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.app-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
 /* Segmented Picker */
 .segmented-picker {
     background: rgba(255, 255, 255, 0.18);
@@ -89,28 +105,13 @@ body, html {
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
-/* Compass / North Button */
-.north-btn {
-    position: absolute;
-    bottom: 40px;
-    right: 16px;
-    z-index: 100;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.north-btn.hidden {
-    opacity: 0;
-    pointer-events: none;
-    transform: scale(0.8);
-}
-
 /* Bottom Sheet */
 .detail-sheet {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(25, 25, 25, 0.75);
+    background: rgba(25, 25, 25, 0.85);
     -webkit-backdrop-filter: blur(25px);
     backdrop-filter: blur(25px);
     border-top: 1px solid rgba(255, 255, 255, 0.15);
@@ -130,7 +131,8 @@ body, html {
     justify-content: space-between;
     align-items: center;
     position: relative;
-    margin-bottom: 12px;
+    height: 28px;
+    margin-bottom: 8px;
 }
 
 .sheet-handle {
@@ -138,17 +140,19 @@ body, html {
     height: 5px;
     background: rgba(255, 255, 255, 0.3);
     border-radius: 3px;
-    margin: 0 auto;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .close-btn {
     position: absolute;
     right: 0;
-    top: -4px;
+    top: 0;
     background: rgba(255, 255, 255, 0.15);
     border: none;
     color: #fff;
-    font-size: 20px;
+    font-size: 18px;
     width: 28px;
     height: 28px;
     border-radius: 50%;
@@ -157,7 +161,7 @@ body, html {
     align-items: center;
     justify-content: center;
     line-height: 1;
-    transition: background 0.2s ease;
+    transition: background 0.2s ease, transform 0.1s ease;
 }
 
 .close-btn:hover {
@@ -172,6 +176,13 @@ body, html {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-right: 4px;
+}
+
+.sheet-title-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
 
 .sheet-header h2 {
@@ -192,6 +203,7 @@ body, html {
     border-radius: 50%;
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    flex-shrink: 0;
 }
 
 .divider {
