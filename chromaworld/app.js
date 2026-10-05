@@ -32,9 +32,8 @@ let loadedTilesRecords = [];
 let overlaysMap = new Map(); // tileID -> Overlay
 let showColors = true;
 let selectedTileID = null;
-let currentZoomLevel = 1; // Analog zum iOS GlobeViewModel
+let currentZoomLevel = 1;
 
-// Berechnet das Geohash-Zoomlevel anhand der Kamera-Distanz (wie in der App)
 function getZoomLevelFromAltitude(altitude) {
     if (altitude > 10000000) return 1;
     if (altitude > 3000000) return 2;
@@ -64,18 +63,20 @@ mapkit.init({
     }
 });
 
-// 5. Map Instanz
+// 5. Map Instanz mit gesperrter Rotation & 3D-Pitch
 const map = new mapkit.Map("map", {
     center: new mapkit.Coordinate(49.9738, 9.1478),
     cameraDistance: 20000000,
     mapType: mapkit.Map.MapTypes.Hybrid,
+    isRotationEnabled: false, // <-- Blockiert die Kartendrehung komplett
+    pitch: 45,                // <-- Leicht gekippte 3D-Perspektive
     showsCompass: mapkit.FeatureVisibility.Hidden,
     showsZoomControl: false,
     showsMapTypeControl: false,
     showsUserLocationControl: false
 });
 
-// 6. Map Event Listener (Kamera-Zoom, Auswahl, Rotation)
+// 6. Map Event Listener
 map.addEventListener("region-change-end", () => {
     updateVisibleOverlays();
 });
@@ -87,27 +88,12 @@ map.addEventListener("select", (event) => {
 });
 
 map.addEventListener("single-tap", (event) => {
-    // Bei Tap ins Leere das Sheet schließen
-    const coordinate = map.convertPointOnPageToCoordinate(event.point);
     if (!event.overlay) {
         selectTile(null);
     }
 });
 
-map.addEventListener("rotation-change", () => {
-    const rotation = map.rotation;
-    const northBtn = document.getElementById("reset-north-btn");
-    const arrow = document.getElementById("compass-arrow");
-    
-    if (Math.abs(rotation) > 2.0) {
-        northBtn.classList.remove("hidden");
-        arrow.style.transform = `rotate(${-rotation}deg)`;
-    } else {
-        northBtn.classList.add("hidden");
-    }
-});
-
-// 7. UI Steuerung (Buttons & Kartenstile)
+// 7. UI Steuerung (Kartenstile)
 document.querySelectorAll(".picker-btn").forEach(btn => {
     btn.addEventListener("click", (e) => {
         document.querySelectorAll(".picker-btn").forEach(b => b.classList.remove("active"));
@@ -115,10 +101,9 @@ document.querySelectorAll(".picker-btn").forEach(btn => {
         
         const style = e.target.getAttribute("data-style");
         if (style === "hybrid") {
-            map.mapType = mapkit.Map.MapTypes.Hybrid;
+            map.mapType = mapkit.Map.MapTypes.Hybrid; // Hybrid = Satellit + Straßennamen
         } else if (style === "satellite") {
-            // MapKit JS verwendet für reinen Satelliten MutedStandard/Hybrid
-            map.mapType = mapkit.Map.MapTypes.Hybrid; 
+            map.mapType = mapkit.Map.MapTypes.Imagery; // Imagery = Reiner Satellit
         } else if (style === "standard") {
             map.mapType = mapkit.Map.MapTypes.Standard;
         }
@@ -132,11 +117,6 @@ document.getElementById("toggle-colors-btn").addEventListener("click", () => {
     updateVisibleOverlays();
 });
 
-document.getElementById("reset-north-btn").addEventListener("click", () => {
-    map.setRotationAnimated(0, true);
-});
-
-// Schließen-Button im Sheet
 document.getElementById("close-sheet-btn").addEventListener("click", () => {
     selectTile(null);
 });
@@ -146,7 +126,6 @@ function updateVisibleOverlays() {
     currentZoomLevel = getZoomLevelFromAltitude(map.cameraDistance);
     
     overlaysMap.forEach((overlay, tileID) => {
-        // Nur Kacheln anzeigen, deren Geohash-Länge genau dem aktuellen Zoom-Level entspricht
         const isCorrectZoom = tileID.length === currentZoomLevel;
         overlay.visible = showColors && isCorrectZoom;
     });
@@ -156,7 +135,6 @@ function updateVisibleOverlays() {
 function selectTile(tileID) {
     if (selectedTileID === tileID) return;
 
-    // Alte Auswahl zurücksetzen
     if (selectedTileID && overlaysMap.has(selectedTileID)) {
         const oldOverlay = overlaysMap.get(selectedTileID);
         oldOverlay.style = new mapkit.Style({
@@ -175,7 +153,6 @@ function selectTile(tileID) {
         return;
     }
 
-    // Neue Auswahl hervorheben
     const currentOverlay = overlaysMap.get(tileID);
     if (currentOverlay) {
         currentOverlay.style = new mapkit.Style({
@@ -288,7 +265,6 @@ async function fetchAndRenderMapTiles() {
             map.addOverlay(overlay);
         });
 
-        // Nach dem Laden der Overlays die Filterung nach Zoom-Level anwenden
         updateVisibleOverlays();
 
     } catch (error) {
