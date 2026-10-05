@@ -125,12 +125,47 @@ body, html {
     transform: translateY(100%);
 }
 
+.sheet-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    margin-bottom: 12px;
+}
+
 .sheet-handle {
     width: 36px;
     height: 5px;
     background: rgba(255, 255, 255, 0.3);
     border-radius: 3px;
-    margin: 0 auto 12px auto;
+    margin: 0 auto;
+}
+
+.close-btn {
+    position: absolute;
+    right: 0;
+    top: -4px;
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: background 0.2s ease;
+}
+
+.close-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.close-btn:active {
+    transform: scale(0.92);
 }
 
 .sheet-header {
