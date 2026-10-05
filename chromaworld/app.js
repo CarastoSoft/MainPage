@@ -27,7 +27,13 @@ function decodeGeohashToBBox(geohash) {
     return { minLat: latMin, maxLat: latMax, minLon: lonMin, maxLon: lonMax };
 }
 
-// 2. CloudKit Konfiguration
+// 2. State Management
+let loadedTilesRecords = [];
+let overlaysMap = new Map(); // tileID -> Overlay
+let showColors = true;
+let selectedTileID = null;
+
+// 3. CloudKit Konfiguration
 CloudKit.configure({
     containers: [{
         containerIdentifier: 'iCloud.CarastoSoft.ChromaWorld',
@@ -39,50 +45,194 @@ CloudKit.configure({
 });
 
 const container = CloudKit.getDefaultContainer();
-// Korrektes Property für die Public Database in CloudKit JS:
 const publicDB = container.publicCloudDatabase;
 
-// 3. MapKit JS Initialisierung mit Token für carastosoft.com
+// 4. MapKit JS Initialisierung
 mapkit.init({
     authorizationCallback: function(done) {
         done("eyJraWQiOiJNWDJCUzU4MjNWIiwidHlwIjoiSldUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJHTjVBQzVUVDczIiwiaWF0IjoxNzkxMTMxMDQ3LCJvcmlnaW4iOiJjYXJhc3Rvc29mdC5jb20iLCJzY29wZSI6Im1hcGtpdF9qcyJ9.T685nKj2NkXG_YJ7WQYCeo8PXStW_KJpgFf--mfNhJs4I701IAkT3oA9Mjq3qyrK903o65UP4aky-ltN2Ke8Mw");
     }
 });
 
-// 4. Karte erstellen (Mit korrekter Region/Span statt 'zoom')
+// 5. Map Instanz
 const map = new mapkit.Map("map", {
-    center: new mapkit.Coordinate(50.1109, 8.6821),
-    span: new mapkit.CoordinateSpan(5.0, 5.0), // Span ersetzt das 'zoom'-Property
-    mapType: mapkit.Map.MapTypes.Standard,
-    showsCompass: mapkit.FeatureVisibility.Adaptive,
-    showsZoomControl: true,
-    showsMapTypeControl: true,
-    showsUserLocationControl: true
+    center: new mapkit.Coordinate(49.9738, 9.1478),
+    span: new mapkit.CoordinateSpan(15.0, 15.0),
+    mapType: mapkit.Map.MapTypes.Hybrid,
+    showsCompass: mapkit.FeatureVisibility.Hidden,
+    showsZoomControl: false,
+    showsMapTypeControl: false,
+    showsUserLocationControl: false
 });
 
-// 5. MapTiles aus CloudKit laden & rendern
+// 6. Map Event Listener (Klick & Rotation)
+map.addEventListener("select", (event) => {
+    if (event.overlay && event.overlay.tileID) {
+        selectTile(event.overlay.tileID);
+    }
+});
+
+map.addEventListener("deselect", () => {
+    selectTile(null);
+});
+
+map.addEventListener("rotation-change", () => {
+    const rotation = map.rotation;
+    const northBtn = document.getElementById("reset-north-btn");
+    const arrow = document.getElementById("compass-arrow");
+    
+    if (Math.abs(rotation) > 2.0) {
+        northBtn.classList.remove("hidden");
+        arrow.style.transform = `rotate(${-rotation}deg)`;
+    } else {
+        northBtn.classList.add("hidden");
+    }
+});
+
+// 7. UI Steuerung & Handler
+document.querySelectorAll(".picker-btn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+        document.querySelectorAll(".picker-btn").forEach(b => b.classList.remove("active"));
+        e.target.classList.add("active");
+        
+        const style = e.target.getAttribute("data-style");
+        if (style === "hybrid") map.mapType = mapkit.Map.MapTypes.Hybrid;
+        else if (style === "satellite") map.mapType = mapkit.Map.MapTypes.Imagery;
+        else if (style === "standard") map.mapType = mapkit.Map.MapTypes.Standard;
+    });
+});
+
+document.getElementById("toggle-colors-btn").addEventListener("click", () => {
+    showColors = !showColors;
+    const btn = document.getElementById("toggle-colors-btn");
+    btn.style.opacity = showColors ? "1" : "0.5";
+    
+    overlaysMap.forEach((overlay) => {
+        overlay.visible = showColors;
+    });
+});
+
+document.getElementById("reset-north-btn").addEventListener("click", () => {
+    map.setRotationAnimated(0, true);
+});
+
+// 8. Tile Selection & Detail Sheet Rendern
+function selectTile(tileID) {
+    if (selectedTileID === tileID) return;
+
+    // Vorherige Auswahl zurücksetzen
+    if (selectedTileID && overlaysMap.has(selectedTileID)) {
+        const oldOverlay = overlaysMap.get(selectedTileID);
+        oldOverlay.style = new mapkit.Style({
+            fillColor: oldOverlay.dominantHex,
+            fillOpacity: 0.6,
+            strokeColor: oldOverlay.dominantHex,
+            lineWidth: 1.5
+        });
+    }
+
+    selectedTileID = tileID;
+    const sheet = document.getElementById("detail-sheet");
+
+    if (!tileID) {
+        sheet.classList.add("hidden");
+        return;
+    }
+
+    // Neue Auswahl hervorheben
+    const currentOverlay = overlaysMap.get(tileID);
+    if (currentOverlay) {
+        currentOverlay.style = new mapkit.Style({
+            fillColor: currentOverlay.dominantHex,
+            fillOpacity: 0.85,
+            strokeColor: "#FFFFFF",
+            lineWidth: 3.0
+        });
+    }
+
+    // Record Daten abrufen & Sheet befüllen
+    const record = loadedTilesRecords.find(r => r.fields.tileID && r.fields.tileID.value === tileID);
+    if (record) {
+        renderDetailSheet(record);
+        sheet.classList.remove("hidden");
+    }
+}
+
+function renderDetailSheet(record) {
+    const dominantHex = (record.fields.dominantHex ? record.fields.dominantHex.value : "#FFFFFF").toUpperCase();
+    
+    document.getElementById("sheet-hex-code").textContent = dominantHex;
+    document.getElementById("sheet-color-preview").style.backgroundColor = dominantHex;
+    document.getElementById("sheet-color-name").textContent = dominantHex; // Standard-Fallback
+
+    // Farb-Namen von TheColorAPI abrufen
+    fetch(`https://www.thecolorapi.com/id?hex=${dominantHex.replace('#', '')}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data && data.name) {
+                document.getElementById("sheet-color-name").textContent = data.name.value;
+            }
+        })
+        .catch(() => {});
+
+    // Color Counts & Total Pixels
+    let colorCounts = {};
+    let totalPixels = 0;
+
+    if (record.fields.colorCountsData && record.fields.colorCountsData.value) {
+        try {
+            const jsonStr = atob(record.fields.colorCountsData.value);
+            colorCounts = JSON.parse(jsonStr);
+            totalPixels = Object.values(colorCounts).reduce((a, b) => a + b, 0);
+        } catch (e) {
+            console.error("JSON Parse Error:", e);
+        }
+    }
+
+    document.getElementById("sheet-total-pixels").textContent = totalPixels;
+
+    // Top 10 Farben rendern
+    const sortedColors = Object.entries(colorCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10);
+
+    const listContainer = document.getElementById("sheet-colors-list");
+    listContainer.innerHTML = "";
+
+    const countSub = document.getElementById("sheet-color-count-sub");
+    const totalUnique = Object.keys(colorCounts).length;
+    countSub.textContent = totalUnique > 10 ? `Top 10 von ${totalUnique}` : "";
+
+    sortedColors.forEach(([hex, count]) => {
+        const percentage = totalPixels > 0 ? ((count / totalPixels) * 100).toFixed(1) : "0.0";
+        const chip = document.createElement("div");
+        chip.className = "color-chip";
+        chip.innerHTML = `
+            <div class="chip-box" style="background-color: ${hex}"></div>
+            <span class="monospaced">${hex.toUpperCase()}</span>
+            <strong style="color: rgba(255,255,255,0.6)">${percentage}%</strong>
+        `;
+        listContainer.appendChild(chip);
+    });
+}
+
+// 9. CloudKit Records laden & Overlays zeichnen
 async function fetchAndRenderMapTiles() {
     const query = { recordType: 'MapTile' };
     
     try {
         const response = await publicDB.performQuery(query);
-        if (!response || !response.records) {
-            console.log("Keine Records von CloudKit erhalten.");
-            return;
-        }
+        if (!response || !response.records) return;
 
-        const records = response.records;
-        console.log(`${records.length} MapTiles aus CloudKit geladen.`);
+        loadedTilesRecords = response.records;
         
-        records.forEach(record => {
+        loadedTilesRecords.forEach(record => {
             const tileID = record.fields.tileID ? record.fields.tileID.value : null;
             const hex = record.fields.dominantHex ? record.fields.dominantHex.value : "#007AFF";
             
             if (!tileID) return;
 
             const bbox = decodeGeohashToBBox(tileID);
-            
-            // Polygon-Punkte definieren
             const points = [
                 new mapkit.Coordinate(bbox.maxLat, bbox.minLon),
                 new mapkit.Coordinate(bbox.maxLat, bbox.maxLon),
@@ -93,12 +243,16 @@ async function fetchAndRenderMapTiles() {
             const overlay = new mapkit.PolygonOverlay(points, {
                 style: new mapkit.Style({
                     fillColor: hex,
-                    fillOpacity: 0.65,
-                    strokeColor: "#FFFFFF",
-                    lineWidth: 1
+                    fillOpacity: 0.6,
+                    strokeColor: hex,
+                    lineWidth: 1.5
                 })
             });
             
+            overlay.tileID = tileID;
+            overlay.dominantHex = hex;
+            
+            overlaysMap.set(tileID, overlay);
             map.addOverlay(overlay);
         });
     } catch (error) {
@@ -106,7 +260,7 @@ async function fetchAndRenderMapTiles() {
     }
 }
 
-// MapKit Initialisierungs-Ablauf sicherstellen
+// MapKit Initialisierung abwarten
 if (mapkit.isInitialized) {
     fetchAndRenderMapTiles();
 } else {
