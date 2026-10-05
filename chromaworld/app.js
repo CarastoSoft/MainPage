@@ -70,6 +70,7 @@ const map = new mapkit.Map("map", {
     mapType: mapkit.Map.MapTypes.Hybrid,
     isRotationEnabled: false, // <-- Blockiert die Kartendrehung komplett
     pitch: 45,                // <-- Leicht gekippte 3D-Perspektive
+    showsPointsOfInterest: true,
     showsCompass: mapkit.FeatureVisibility.Hidden,
     showsZoomControl: false,
     showsMapTypeControl: false,
@@ -101,11 +102,14 @@ document.querySelectorAll(".picker-btn").forEach(btn => {
         
         const style = e.target.getAttribute("data-style");
         if (style === "hybrid") {
-            map.mapType = mapkit.Map.MapTypes.Hybrid; // Hybrid = Satellit + Straßennamen
+            map.mapType = mapkit.Map.MapTypes.Hybrid; // Hybrid = Satellit + Straßennamen & Orte
+            map.showsPointsOfInterest = true;
         } else if (style === "satellite") {
             map.mapType = mapkit.Map.MapTypes.Imagery; // Imagery = Reiner Satellit
+            map.showsPointsOfInterest = false;        // Deaktiviert Beschriftungen & Ortsnamen
         } else if (style === "standard") {
             map.mapType = mapkit.Map.MapTypes.Standard;
+            map.showsPointsOfInterest = true;
         }
     });
 });
