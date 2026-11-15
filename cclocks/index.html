@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Primary Meta Tags -->
+  <title>CClocks — Clock, Calendar, Weather & Astro Widgets for iOS</title>
+  <meta name="title" content="CClocks — Clock, Calendar, Weather & Astro Widgets for iOS">
+  <meta name="description" content="Handcrafted clock, calendar, weather and astro widgets for your iPhone Home Screen, Lock Screen and StandBy — plus 70+ exclusive wallpapers.">
+  <meta name="theme-color" content="#08090b">
+
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="CClocks — Clock, Calendar, Weather & Astro Widgets for iOS">
+  <meta property="og:description" content="Handcrafted clock, calendar, weather and astro widgets for your Home Screen, Lock Screen and StandBy.">
+  <meta property="og:image" content="clock.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'><path fill='%2308090b' d='M0 0h16v16H0z'/><path fill='%23FF7A00' d='M3 3h5v2H5v6h3v2H3zm6 0h5v2h-3v6h3v2H9z'/></svg>">
+
+  <!-- Fonts -->
+<style>
+  @font-face { font-family: 'Inter'; font-style: normal; font-weight: 300; font-display: swap; src: url('/fonts/Inter-Light.woff') format('woff'); }
+  @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/Inter-Regular.woff') format('woff'); }
+  @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/Inter-Medium.woff') format('woff'); }
+  @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/Inter-SemiBold.woff') format('woff'); }
+  @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/Inter-Bold.woff') format('woff'); }
+</style>
+ 
+  <style>
+    :root {
+      --bg-color: #08090b;
+      --surface-card: rgba(255, 255, 255, 0.03);
+      --surface-card-hover: rgba(255, 255, 255, 0.05);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.2);
+      --text-primary: #f5f6f8;
+      --text-secondary: #8a919e;
+      --text-tertiary: #525866;
+      --accent: #FF7A00;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-primary);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding: 0 20px;
+    }
+
+    /* Ambient Glow Background */
+    body::before {
+      content: '';
+      position: absolute;
+      top: -150px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 1000px;
+      height: 600px;
+      background: radial-gradient(circle at 50% 0%, rgba(255, 122, 0, 0.1), transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Header & Navigation */
+    header {
+      width: 100%;
+      max-width: 1080px;
+      padding: 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    .brand {
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 10;
+    }
+
+    .brand-logo {
+      width: 28px;
+      height: 28px;
+      background: #161618;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .brand-logo span {
+      color: var(--accent);
+    }
+
+    /* Mobile Menu Toggle */
+    .menu-btn {
+      display: none;
+    }
+
+    .menu-icon {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 24px;
+      height: 18px;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .menu-icon span {
+      display: block;
+      height: 2px;
+      width: 100%;
+      background-color: var(--text-primary);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    nav {
+      display: flex;
+      gap: 32px;
+    }
+
+    nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 400;
+      transition: color 0.25s ease;
+    }
+
+    nav a:hover {
+      color: var(--text-primary);
+    }
+
+    /* Responsive Mobile Navigation */
+    @media (max-width: 768px) {
+      .menu-icon {
+        display: flex;
+      }
+
+      nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #0d0f12;
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 10px;
+        flex-direction: column;
+        gap: 16px;
+        z-index: 100;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      }
+
+      nav a {
+        font-size: 1rem;
+        padding: 8px 0;
+      }
+
+      .menu-btn:checked ~ nav {
+        display: flex;
+      }
+
+      .menu-btn:checked ~ .menu-icon span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+      }
+      .menu-btn:checked ~ .menu-icon span:nth-child(2) {
+        opacity: 0;
+      }
+      .menu-btn:checked ~ .menu-icon span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+      }
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 1080px;
+      display: flex;
+      flex-direction: column;
+      gap: 80px;
+      padding: 60px 0 100px 0;
+    }
+
+    /* Hero Section */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(255, 122, 0, 0.08);
+      border: 1px solid rgba(255, 122, 0, 0.25);
+      border-radius: 100px;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: #ffffff;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+      max-width: 620px;
+      line-height: 1.6;
+    }
+
+    /* App Store Button Container */
+    .appstore-wrapper {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .appstore-badge-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #000000;
+      color: #ffffff;
+      padding: 10px 22px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-decoration: none;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .appstore-badge-btn:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 20px rgba(255, 122, 0, 0.15);
+    }
+
+    .appstore-badge-btn svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
+
+    .appstore-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      line-height: 1.2;
+    }
+
+    .appstore-text .sub {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #a1a1a6;
+    }
+
+    .appstore-text .main {
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .coming-soon-pill {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(255, 122, 0, 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(255, 122, 0, 0.3);
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-left: 6px;
+    }
+
+    /* Video Showcase Section */
+    .video-showcase {
+      width: 100%;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .video-container {
+      width: 100%;
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      background: var(--surface-card);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      transition: border-color 0.3s ease;
+    }
+
+    .video-container:hover {
+      border-color: var(--border-hover);
+    }
+
+    .video-container video {
+      width: 100%;
+      max-width: 100%;
+      max-height: 85vh;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Section Typography */
+    .section-header {
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .section-title {
+      font-size: 0.825rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .scroll-hint {
+      display: none;
+      font-size: 0.75rem;
+      color: var(--text-tertiary);
+    }
+
+    @media (max-width: 768px) {
+      .scroll-hint {
+        display: block;
+      }
+    }
+
+    /* Screenshots Showcase Grid & Mobile Carousel */
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    @media (min-width: 769px) {
+      .showcase-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .showcase-grid {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 16px;
+        padding-bottom: 16px;
+        margin: 0 -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+
+      .showcase-grid::-webkit-scrollbar {
+        display: none;
+      }
+
+      .showcase-card {
+        flex: 0 0 82%;
+        scroll-snap-align: start;
+      }
+    }
+
+    .showcase-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .showcase-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .showcase-img-wrapper {
+      width: 100%;
+      background: #000;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .showcase-img-wrapper img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .showcase-card:hover .showcase-img-wrapper img {
+      transform: scale(1.03);
+    }
+
+    .showcase-info {
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.015);
+      border-top: 1px solid var(--border-color);
+    }
+
+    .showcase-info h3 {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .showcase-info p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+    }
+
+    /* Quick Guide / How to Setup */
+    .setup-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .setup-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .setup-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #ffffff;
+      color: #000000;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-text {
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      font-weight: 400;
+      line-height: 1.5;
+      padding-top: 3px;
+    }
+
+    /* Choice / Pricing Section */
+    .choice-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    @media (min-width: 768px) {
+      .choice-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .choice-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 28px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      transition: border-color 0.3s;
+    }
+
+    .choice-card.pro {
+      border-color: rgba(255, 122, 0, 0.4);
+      background: linear-gradient(180deg, rgba(255, 122, 0, 0.05) 0%, rgba(255, 122, 0, 0.01) 100%);
+    }
+
+    .choice-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.2rem;
+    }
+
+    .choice-card.pro .choice-icon {
+      background: rgba(255, 122, 0, 0.15);
+      color: var(--accent);
+    }
+
+    .choice-details {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .choice-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .choice-header h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .pro-tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: var(--accent);
+      color: #000;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .choice-details p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    /* Feature Grid */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    @media (min-width: 640px) {
+      .feature-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 960px) {
+      .feature-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .feature-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .feature-card:hover {
+      background: var(--surface-card-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+
+    .feature-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255, 122, 0, 0.1);
+      border: 1px solid rgba(255, 122, 0, 0.2);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .feature-icon svg { width: 20px; height: 20px; }
+
+    .new-tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(255, 122, 0, 0.35);
+      background: rgba(255, 122, 0, 0.08);
+      padding: 2px 8px;
+      border-radius: 100px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .feature-card p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+      line-height: 1.55;
+    }
+
+    .setup-note {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+      border-top: 1px solid var(--border-color);
+      padding-top: 20px;
+    }
+
+    .choice-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .choice-list li {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .choice-list li::before {
+      content: '';
+      position: absolute;
+      left: 2px;
+      top: 0.6em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-tertiary);
+    }
+
+    .choice-card.pro .choice-list li::before { background: var(--accent); }
+
+    /* Support Section */
+    .support-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    @media (min-width: 768px) {
+      .support-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .support-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 28px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .support-card:hover {
+      background: var(--surface-card-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+
+    .support-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255, 122, 0, 0.1);
+      border: 1px solid rgba(255, 122, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--accent);
+    }
+
+    .support-icon svg { width: 20px; height: 20px; }
+
+    .support-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .support-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .support-value {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #ffffff;
+      overflow-wrap: anywhere;
+    }
+
+    .support-note {
+      margin-top: 20px;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    footer {
+      width: 100%;
+      max-width: 1080px;
+      margin-top: auto;
+      padding: 40px 0;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+      color: var(--text-tertiary);
+      font-size: 0.825rem;
+    }
+
+    @media (min-width: 768px) {
+      footer {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px 24px;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--text-primary);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="../" class="brand" aria-label="CarastoSoft Homepage">
+      <div class="brand-logo" aria-hidden="true"><span>C</span>C</div>
+      CarastoSoft
+    </a>
+
+    <input type="checkbox" id="menu-btn" class="menu-btn" aria-label="Toggle navigation">
+    <label for="menu-btn" class="menu-icon" aria-label="Open menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+
+    <nav>
+      <a href="#showcase">Showcase</a>
+      <a href="#features">Features</a>
+      <a href="#setup">Setup</a>
+      <a href="#pro">Free vs Pro</a>
+      <a href="#support">Support</a>
+      <a href="../">All Apps</a>
+    </nav>
+  </header>
+
+  <main class="container">
+
+    <section class="hero">
+      <div class="hero-badge">New in 1.1 · Weather &amp; Astro</div>
+      <h1>CClocks</h1>
+      <p>
+        Transform your Home Screen, Lock Screen, and StandBy mode with handcrafted clock, calendar, weather &amp; astro widgets — razor-sharp in every size.
+      </p>
+
+<div class="appstore-wrapper">
+  <a href="https://apps.apple.com/app/cclocks/id6800232637"
+     class="appstore-badge-btn"
+     target="_blank"
+     rel="noopener"
+     aria-label="Download CClocks on the App Store">
+    <svg viewBox="0 0 384 512" aria-hidden="true">
+      <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 52.3-12 69.5-34.3z"/>
+    </svg>
+    <div class="appstore-text">
+      <span class="sub">Download on the</span>
+      <span class="main">App Store</span>
+    </div>
+  </a>
+</div>
+    </section>
+
+    <section class="video-showcase">
+      <div class="video-container">
+        <video autoplay loop muted playsinline poster="clock.png">
+          <source src="Introducing.mp4" type="video/mp4">
+          <source src="Introducing.mov" type="video/quicktime">
+          Your browser does not support HTML video.
+        </video>
+      </div>
+    </section>
+
+    <section id="showcase">
+      <div class="section-header">
+        <h2 class="section-title">Visual Showcase</h2>
+        <span class="scroll-hint">Swipe &rarr;</span>
+      </div>
+
+      <div class="showcase-grid">
+        
+        <div class="showcase-card">
+          <div class="showcase-img-wrapper">
+            <img src="clock.png" alt="55+ Unique Clock Widgets" width="400" height="300" loading="lazy">
+          </div>
+          <div class="showcase-info">
+            <h3>55+ Clock Widgets</h3>
+            <p>From minimalist typography to classic analog chronographs.</p>
+          </div>
+        </div>
+
+        <div class="showcase-card">
+          <div class="showcase-img-wrapper">
+            <img src="calendar.png" alt="Over 30 Calendar Styles" width="400" height="300" loading="lazy">
+          </div>
+          <div class="showcase-info">
+            <h3>30+ Calendar Styles</h3>
+            <p>Clean monthly grids, week progress, and day counters.</p>
+          </div>
+        </div>
+
+        <div class="showcase-card">
+          <div class="showcase-img-wrapper">
+            <img src="Color.png" alt="Custom Accent Colors" width="400" height="300" loading="lazy">
+          </div>
+          <div class="showcase-info">
+            <h3>Custom Accents</h3>
+            <p>Match your setup with custom color highlights and themes.</p>
+          </div>
+        </div>
+
+        <div class="showcase-card">
+          <div class="showcase-img-wrapper">
+            <img src="ios%20theme.png" alt="Light, Dark & Tinted Themes" width="400" height="300" loading="lazy">
+          </div>
+          <div class="showcase-info">
+            <h3>Native iOS Themes</h3>
+            <p>Seamless support for Light, Dark, and Tinted Home Screens.</p>
+          </div>
+        </div>
+
+        <div class="showcase-card">
+          <div class="showcase-img-wrapper">
+            <img src="Standby.png" alt="Full StandBy Support" width="400" height="300" loading="lazy">
+          </div>
+          <div class="showcase-info">
+            <h3>StandBy Mode</h3>
+            <p>Transform your desk or nightstand while charging horizontally.</p>
+          </div>
+        </div>
+
+        <div class="showcase-card">
+          <div class="showcase-img-wrapper">
+            <img src="wallpaper.png" alt="70+ Exclusive Wallpapers" width="400" height="300" loading="lazy">
+          </div>
+          <div class="showcase-info">
+            <h3>70+ Wallpapers</h3>
+            <p>Hand-crafted backgrounds designed to match every widget style.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="section-header">
+        <h2 class="section-title">More Than Clocks</h2>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-top">
+            <div class="feature-icon" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 3v1.5M18.36 5.64l-1.06 1.06M21 12h-1.5M6.7 6.7 5.64 5.64M4.5 12H3"/><path d="M8.5 12a3.5 3.5 0 0 1 6.9-.8"/><path d="M8 20h9a3.5 3.5 0 0 0 0-7 4.5 4.5 0 0 0-8.6 1.4A3 3 0 0 0 8 20z"/></svg></div>
+            <span class="new-tag">New</span>
+          </div>
+          <h3>Weather Widgets</h3>
+          <p>Current conditions, an hourly temperature curve and a week forecast — in the same handcrafted style as your clocks. Updates automatically for your location.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-top">
+            <div class="feature-icon" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg></div>
+            <span class="new-tag">New</span>
+          </div>
+          <h3>Astro Widgets</h3>
+          <p>Sunrise, sunset, golden hour and moon phases for exactly where you are — beautifully drawn on your Home Screen.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-top">
+            <div class="feature-icon" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 0 0-4-5.7V5a2 2 0 1 0-4 0v.3A6 6 0 0 0 6 11v3.2a2 2 0 0 1-.6 1.4L4 17h5"/><path d="M9 17a3 3 0 0 0 6 0"/></svg></div>
+            <span class="new-tag">New</span>
+          </div>
+          <h3>Gentle Reminders</h3>
+          <p>Optional notifications for full moon, new moon, the start of each season and golden hour. Every one can be switched on or off individually.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-top">
+            <div class="feature-icon" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M9.5 7.5h5M9 11.5h2.5M12.5 11.5H15"/></svg></div>
+          </div>
+          <h3>Lock Screen Widgets</h3>
+          <p>Clocks, calendars, world time, sun and moon right on your Lock Screen — with three designs free for everyone.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-top">
+            <div class="feature-icon" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+            <span class="new-tag">New</span>
+          </div>
+          <h3>Sharp in Every Size</h3>
+          <p>Every widget is drawn natively for small, medium and large — no upscaling, crisp lines even on the big 4×4 widgets.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-top">
+            <div class="feature-icon" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></div>
+            <span class="new-tag">New</span>
+          </div>
+          <h3>Easy to Find</h3>
+          <p>When you edit a widget, designs are grouped into clear sections with search — and free designs are always marked.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="setup">
+      <div class="section-header">
+        <h2 class="section-title">Quick Guide — How to Setup</h2>
+      </div>
+
+      <div class="setup-card">
+        <div class="setup-steps">
+          <div class="setup-step">
+            <div class="step-number">1</div>
+            <div class="step-text">
+              Long-press your Home Screen until apps jiggle, then tap the <strong>'+' icon</strong> in the top left corner.
+            </div>
+          </div>
+          <div class="setup-step">
+            <div class="step-number">2</div>
+            <div class="step-text">
+              Search for <strong>'CClocks'</strong>, choose your preferred widget size, and tap <strong>'Add Widget'</strong>.
+            </div>
+          </div>
+          <div class="setup-step">
+            <div class="step-number">3</div>
+            <div class="step-text">
+              Long-press your new widget, select <strong>'Edit Widget'</strong>, and pick your favorite style!
+            </div>
+          </div>
+        </div>
+        <p class="setup-note">
+          Tip: The app shows a short animation of these steps in every widget category. For weather and astro widgets, allow location access so they always show your current place.
+        </p>
+      </div>
+    </section>
+
+    <section id="pro">
+      <div class="section-header">
+        <h2 class="section-title">Your Choice — Try Free or Go Pro</h2>
+      </div>
+
+      <div class="choice-grid">
+        <div class="choice-card">
+          <div class="choice-icon" aria-hidden="true">🤍</div>
+          <div class="choice-details">
+            <div class="choice-header">
+              <h3>Enjoy Free</h3>
+            </div>
+            <p>Essential widgets and designs, completely free, forever. No hidden pressure.</p>
+            <ul class="choice-list">
+              <li>Free clock, calendar, weather &amp; astro designs</li>
+              <li>3 Lock Screen widgets</li>
+              <li>5 accent colors</li>
+              <li>Supported by ads</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="choice-card pro">
+          <div class="choice-icon" aria-hidden="true">👑</div>
+          <div class="choice-details">
+            <div class="choice-header">
+              <h3>Upgrade to Pro</h3>
+              <span class="pro-tag">Ad-Free</span>
+            </div>
+            <p>Unlock everything, enjoy a 100% ad-free experience, and support independent development.</p>
+            <ul class="choice-list">
+              <li>All designs in every widget size</li>
+              <li>All Lock Screen widgets</li>
+              <li>Full color palette</li>
+              <li>All 70+ wallpapers</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="support">
+      <div class="section-header">
+        <h2 class="section-title">Support</h2>
+      </div>
+
+      <div class="support-grid">
+        <a href="mailto:hello@carastosoft.com?subject=CClocks%20Support" class="support-card">
+          <div class="support-icon" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="2.75" y="4.75" width="18.5" height="14.5" rx="2.25"/><path d="m3.5 6.5 8.5 6 8.5-6"/></svg></div>
+          <div class="support-text">
+            <span class="support-label">Email</span>
+            <span class="support-value">hello@carastosoft.com</span>
+          </div>
+        </a>
+
+        <a href="https://www.instagram.com/carastosoft/" class="support-card" target="_blank" rel="noopener">
+          <div class="support-icon" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.75" fill="currentColor" stroke="none"/></svg></div>
+          <div class="support-text">
+            <span class="support-label">Instagram</span>
+            <span class="support-value">@carastosoft</span>
+          </div>
+        </a>
+      </div>
+
+      <p class="support-note">
+        Questions, feedback or a widget that doesn't look right? Write to us – we usually reply within 1–2 business days. If you're reporting an issue, please include your app version (shown at the bottom of the app menu) and your iPhone model.
+      </p>
+    </section>
+
+  </main>
+
+  <footer>
+    <div>&copy; 2026 CarastoSoft. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="../privacy-policy.html">Privacy Policy</a>
+      <a href="#support">Support</a>
+      <a href="../terms-of-service.html">Terms of Use</a>
+      <a href="../legal-notice.html">Legal Notice</a>
+    </div>
+  </footer>
+
+</body>
+</html>
